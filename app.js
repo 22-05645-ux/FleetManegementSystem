@@ -181,8 +181,50 @@ function renderTab(v) {
     case "Details":
       content.innerHTML = `
         <table class="details-table">
-          <tr><th>Plate Number:</th><td>${v.plate}</td></tr>
-          <tr><th>Whereabouts:</th><td>${v.whereabouts}</td></tr>
+          <tr>
+        <th>Model:</th><td>${d.model || "-"}</td>
+        <th>Year Model:</th><td>${d.yearModel || d.yearBought || "-"}</td>
+      </tr>
+      <tr>
+        <th>Color:</th><td>${d.Color || d.color || "-"}</td>
+        <th>Fuel Type:</th><td>${d.FuelType || "-"}</td>
+      </tr>
+      <tr>
+        <th>Classification:</th><td>${d.Classification || "-"}</td>
+        <th>Vehicle Type:</th><td>${d.VehicleType || "-"}</td>
+      </tr>
+      <tr>
+        <th>Gross Weight:</th><td>${d.GrossWt || "-"}</td>
+        <th>Net Weight:</th><td>${d.NetWt || "-"}</td>
+      </tr>
+      <tr>
+        <th>Shipping Weight:</th><td>${d.ShippingWt || "-"}</td>
+        <th>Net Capacity:</th><td>${d.NetCapacity || "-"}</td>
+      </tr>
+      <tr>
+        <th>No. of Cylinders:</th><td>${d.NoofCylinders || "-"}</td>
+        <th>Piston Displacement:</th><td>${d.PistonDisplacement || "-"}</td>
+      </tr>
+      <tr>
+        <th>Engine No.:</th><td>${d.EngineNo || "-"}</td>
+        <th>Chassis No.:</th><td>${d.ChassisNo || "-"}</td>
+      </tr>
+      <tr>
+        <th>MV FILE NO.:</th><td>${d.MVFILENO || "-"}</td>
+         <th>LTO Client ID:</th><td>${d.LTOclientId || d.LTOClientID || "-"}</td>
+      </tr>
+      <tr>
+        <th>TIN:</th><td>${d.tin || "-"}</td>
+        <th>Account Number:</th><td>${d.AccountNumber || "-"}</td>
+      </tr>
+      <tr>
+        <th>AutoSweep No.:</th><td>${d.AutoSweep || "-"}</td>
+        <th>Easy Trip No.:</th><td>${d.EasyTrip || "-"}</td>
+      </tr>
+      <tr>
+      <th>OR No.:</th><td>${d.OR || "-"}</td>
+       <th>CR No.:</th><td>${d.CRNO || "-"}</td>
+      </tr>
         </table>
       `;
       break;
@@ -468,4 +510,5 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
