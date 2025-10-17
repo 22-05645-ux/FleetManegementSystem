@@ -564,8 +564,6 @@ function toggleHistory(type) {
 // ------------------- FORMS -------------------
 function submitMaintenance(e) {
   e.preventDefault();
-  if (localStorage.getItem("userRole") !== "admin") {
-  alert("Access denied. Only administrators can perform this action.");
   return;
 }
 
@@ -577,8 +575,6 @@ function submitMaintenance(e) {
 
 function submitVehicleRequest(e) {
   e.preventDefault();
-  if (localStorage.getItem("userRole") !== "admin") {
-  alert("Access denied. Only administrators can perform this action.");
   return;
 }
 
@@ -590,8 +586,6 @@ function submitVehicleRequest(e) {
 
 function submitWhereabouts(e) {
   e.preventDefault();
-  if (localStorage.getItem("userRole") !== "admin") {
-  alert("Access denied. Only administrators can perform this action.");
   return;
 }
 
@@ -605,8 +599,6 @@ function submitWhereabouts(e) {
 
 function submitFuel(e) {
   e.preventDefault();
-  if (localStorage.getItem("userRole") !== "admin") {
-  alert("Access denied. Only administrators can perform this action.");
   return;
 }
 
@@ -618,8 +610,6 @@ function submitFuel(e) {
 
 function submitReport(e) {
   e.preventDefault();
-  if (localStorage.getItem("userRole") !== "admin") {
-  alert("Access denied. Only administrators can perform this action.");
   return;
 }
 
@@ -650,6 +640,7 @@ if (localStorage.getItem("loggedIn") === "true") {
 } else {
   renderLogin();
 }
+
 
 
 
