@@ -1,52 +1,3 @@
-
-// === ADDED FEATURE: LOGIN SYSTEM WITH ROLES (TOP SECTION) ===
-// =============================================================
-let users = JSON.parse(localStorage.getItem("users")) || [
-  { username: "admin", password: "12345", role: "admin" },
-  { username: "fleet", password: "cifra2025", role: "viewer" }
-];
-localStorage.setItem("users", JSON.stringify(users));
-
-const app = document.getElementById("app");
-
-function renderLogin() {
-  app.innerHTML = `
-    <div class="login-container">
-      <h2>Fleet Management System</h2>
-      <p class="login-subtitle">Cifra Industrial Services Corporation</p>
-      <form id="loginForm" onsubmit="handleLogin(event)">
-        <input type="text" name="username" placeholder="Username" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <button type="submit">Log In</button>
-      </form>
-      <p class="login-note">Authorized users only</p>
-    </div>
-  `;
-}
-
-function handleLogin(e) {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.target));
-  const user = users.find(
-    (u) => u.username === data.username && u.password === data.password
-  );
-  if (user) {
-    localStorage.setItem("loggedIn", "true");
-    localStorage.setItem("userRole", user.role);
-    localStorage.setItem("username", user.username);
-    document.getElementById("userDisplay").textContent = user.username;
-    renderList();
-  } else {
-    alert("Invalid username or password.");
-  }
-}
-
-function handleLogout() {
-  localStorage.removeItem("loggedIn");
-  localStorage.removeItem("userRole");
-  localStorage.removeItem("username");
-  renderLogin();
-}
 // ------------------- DATA -------------------
 let vehicles = JSON.parse(localStorage.getItem("vehicles")) || [
   { plate: "NGX 4853", whereabouts: "Batangas City", history: [] },
@@ -555,6 +506,13 @@ function renderTab(v, d) {
   }
 }
 
+if (localStorage.getItem("userRole") !== "admin") {
+  const buttons = tab.querySelectorAll("button");
+  buttons.forEach(btn => btn.disabled = true);
+  tab.querySelectorAll("form input, form select").forEach(f => f.disabled = true);
+}
+
+
 // ------------------- HISTORY -------------------
 function renderHistory(v, tab) {
   if (!v.history.length) {
@@ -657,6 +615,11 @@ function toggleHistory(type) {
 // ------------------- FORMS -------------------
 function submitMaintenance(e) {
   e.preventDefault();
+  if (localStorage.getItem("userRole") !== "admin") {
+  alert("Access denied. Only administrators can perform this action.");
+  return;
+}
+
   const d = Object.fromEntries(new FormData(e.target));
   const v = vehicles.find(x => x.plate === selectedVehicle);
   v.history.push({ type: "Maintenance", ...d });
@@ -665,6 +628,11 @@ function submitMaintenance(e) {
 
 function submitVehicleRequest(e) {
   e.preventDefault();
+  if (localStorage.getItem("userRole") !== "admin") {
+  alert("Access denied. Only administrators can perform this action.");
+  return;
+}
+
   const d = Object.fromEntries(new FormData(e.target));
   const v = vehicles.find(x => x.plate === selectedVehicle);
   v.history.push({ type: "Vehicle Request", ...d });
@@ -673,6 +641,11 @@ function submitVehicleRequest(e) {
 
 function submitWhereabouts(e) {
   e.preventDefault();
+  if (localStorage.getItem("userRole") !== "admin") {
+  alert("Access denied. Only administrators can perform this action.");
+  return;
+}
+
   const f = new FormData(e.target);
   const place = f.get("place") === "Company Use" ? `Company Use - ${f.get("company")}` : f.get("place");
   const v = vehicles.find(x => x.plate === selectedVehicle);
@@ -683,6 +656,11 @@ function submitWhereabouts(e) {
 
 function submitFuel(e) {
   e.preventDefault();
+  if (localStorage.getItem("userRole") !== "admin") {
+  alert("Access denied. Only administrators can perform this action.");
+  return;
+}
+
   const d = Object.fromEntries(new FormData(e.target));
   const v = vehicles.find(x => x.plate === selectedVehicle);
   v.history.push({ type: "Fuel", ...d });
@@ -691,6 +669,11 @@ function submitFuel(e) {
 
 function submitReport(e) {
   e.preventDefault();
+  if (localStorage.getItem("userRole") !== "admin") {
+  alert("Access denied. Only administrators can perform this action.");
+  return;
+}
+
   const fileInput = e.target.report.files[0];
   if (!fileInput) return alert("Please select a file first.");
 
@@ -707,146 +690,19 @@ function submitReport(e) {
   saveAndRefresh("History");
 }
 
-function renderChangePassword() {
-  app.innerHTML = `
-    <div class="login-container">
-      <h2>Change Password</h2>
-      <form id="changeForm" onsubmit="handleChangePassword(event)">
-        <input type="text" name="username" placeholder="Username"
-               value="${localStorage.getItem("username") || ""}" required />
-        <input type="password" name="oldPassword" placeholder="Old Password" required />
-        <input type="password" name="newPassword" placeholder="New Password" required />
-        <input type="password" name="confirmPassword" placeholder="Confirm New Password" required />
-        <button type="submit">Update Password</button>
-      </form>
-      <button onclick="renderList()" class="back-btn">← Back</button>
-    </div>
-  `;
-}
-
-function handleChangePassword(e) {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.target));
-  let users = JSON.parse(localStorage.getItem("users")) || [
-    { username: "admin", password: "12345", role: "admin" },
-    { username: "fleet", password: "cifra2025", role: "viewer" }
-  ];
-
-  const currentUser = localStorage.getItem("username");
-  const role = localStorage.getItem("userRole");
-  const user = users.find((u) => u.username === data.username);
-
-  if (!user) return alert("User not found.");
-  if (role !== "admin" && user.username !== currentUser)
-    return alert("Access denied. Only admins can change other users' passwords.");
-  if (user.password !== data.oldPassword) return alert("Old password is incorrect.");
-  if (data.newPassword !== data.confirmPassword)
-    return alert("New passwords do not match.");
-
-  user.password = data.newPassword;
-  localStorage.setItem("users", JSON.stringify(users));
-  alert("Password updated successfully!");
-  renderList();
-}
 // ------------------- HELPERS -------------------
 function backToList(){ selectedVehicle=null; renderList(); }
 function setTab(tab){ activeTab=tab; renderDetails(); }
 function saveAndRefresh(tab){ saveData(); setTab(tab); }
 
-// ------------------- LOGIN SYSTEM -------------------
-let users = JSON.parse(localStorage.getItem("users")) || [
-  { username: "admin", password: "12345", role: "admin" },
-  { username: "fleet", password: "cifra2025", role: "viewer" }
-];
-localStorage.setItem("users", JSON.stringify(users));
-
-const app = document.getElementById("app");
-
-function renderLogin() {
-  app.innerHTML = `
-    <div class="login-container">
-      <h2>Fleet Management System</h2>
-      <p class="login-subtitle">Cifra Industrial Services Corporation</p>
-      <form id="loginForm" onsubmit="handleLogin(event)">
-        <input type="text" name="username" placeholder="Username" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <button type="submit">Log In</button>
-      </form>
-      <p class="login-note">Authorized users only</p>
-    </div>
-  `;
-}
-
-function handleLogin(e) {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.target));
-  const user = users.find(u => u.username === data.username && u.password === data.password);
-  if (user) {
-    localStorage.setItem("loggedIn", "true");
-    localStorage.setItem("userRole", user.role);
-    localStorage.setItem("username", user.username);
-    document.getElementById("userDisplay").textContent = user.username;
-    renderList();
-  } else alert("Invalid username or password.");
-}
-
-function handleLogout() {
-  localStorage.removeItem("loggedIn");
-  localStorage.removeItem("userRole");
-  localStorage.removeItem("username");
-  renderLogin();
-}
-
-// ------------------- CHANGE PASSWORD -------------------
-function renderChangePassword() {
-  app.innerHTML = `
-    <div class="login-container">
-      <h2>Change Password</h2>
-      <form id="changeForm" onsubmit="handleChangePassword(event)">
-        <input type="text" name="username" placeholder="Username" value="${localStorage.getItem("username") || ""}" required />
-        <input type="password" name="oldPassword" placeholder="Old Password" required />
-        <input type="password" name="newPassword" placeholder="New Password" required />
-        <input type="password" name="confirmPassword" placeholder="Confirm New Password" required />
-        <button type="submit">Update Password</button>
-      </form>
-      <button onclick="renderList()" class="back-btn">← Back</button>
-    </div>
-  `;
-}
-
-function handleChangePassword(e) {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.target));
-  let users = JSON.parse(localStorage.getItem("users")) || [
-    { username: "admin", password: "12345", role: "admin" },
-    { username: "fleet", password: "cifra2025", role: "viewer" }
-  ];
-
-  const currentUser = localStorage.getItem("username");
-  const role = localStorage.getItem("userRole");
-  const user = users.find(u => u.username === data.username);
-
-  if (!user) return alert("User not found.");
-  if (role !== "admin" && user.username !== currentUser)
-    return alert("Access denied. Only admins can change other users' passwords.");
-  if (user.password !== data.oldPassword) return alert("Old password is incorrect.");
-  if (data.newPassword !== data.confirmPassword)
-    return alert("New passwords do not match.");
-
-  user.password = data.newPassword;
-  localStorage.setItem("users", JSON.stringify(users));
-  alert("Password updated successfully!");
-  renderList();
-}
-
-// =============================================================
-// === INIT SECTION (UPDATED TO REQUIRE LOGIN) =================
-// =============================================================
+// ------------------- INIT -------------------
 if (localStorage.getItem("loggedIn") === "true") {
   renderList();
 } else {
   renderLogin();
 }
+
+
 
 
 
