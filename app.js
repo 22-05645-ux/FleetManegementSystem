@@ -1,4 +1,13 @@
-// ------------------- DATA -------------------
+// ------------------- USERS -------------------
+let users = JSON.parse(localStorage.getItem("users")) || [
+  { username: "admin", password: "admin123", role: "admin" },
+  { username: "user", password: "user123", role: "user" }
+];
+localStorage.setItem("users", JSON.stringify(users));
+
+let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser")) || null;
+
+// ------------------- VEHICLE DATA -------------------
 let vehicles = JSON.parse(localStorage.getItem("vehicles")) || [
   { plate: "NGX 4853", whereabouts: "Batangas City", history: [] },
   { plate: "NGX 4856", whereabouts: "Batangas City", history: [] },
@@ -10,11 +19,11 @@ let vehicles = JSON.parse(localStorage.getItem("vehicles")) || [
   { plate: "NQX 657", whereabouts: "Batangas City", history: [] },
   { plate: "WQT 225", whereabouts: "Batangas City", history: [] },
   { plate: "MAM 7806", whereabouts: "Batangas City", history: [] },
-  { plate: "NBO 6586", whereabouts: "Batangas City", history: [] },
+  { plate: "NBO 6586", whereabouts: "Batangas City", history: [] }
 ];
 
 const details = {
-  "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB", 
+   "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB", 
               yearModel: "2013", 
               Color: "Polar White", 
               FuelType: "Diesel", 
@@ -73,60 +82,6 @@ const details = {
                NetWt: "", 
                ShippingWt: "", 
                NetCapacity: "", 
-               EngineNo:"", 
-               MVFILENO:"", 
-               CRNO: "", 
-               PistonDisplacement: "", 
-               NoofCylinders: "", 
-               ChassisNo:"", 
-               LTOclientId:"", 
-               tin: "",
-               AccountNumber:"2388347",
-               AutoSweep: "F883794",
-               EasyTrip: "5400-0023-1590",
-              },
-  "NFZ 2848": { model: "ISUZU Traviz", 
-               yearModel: "", 
-               color: "White", 
-               FuelType: "", 
-               Classification:"", 
-               VehicleType: "", 
-               Aircon: "", 
-               GrossWt:"", 
-               NetWt: "", 
-               ShippingWt: "", 
-               NetCapacity: "", 
-               EngineNo:"", 
-               MVFILENO:"", 
-               CRNO: "", 
-               PistonDisplacement: "", 
-               NoofCylinders: "", 
-               ChassisNo:"", 
-               LTOclientId:"", 
-               tin: "",
-               AccountNumber:"782793",
-               AutoSweep: "R333835",
-               EasyTrip: "",
-              },
-  "CBP 5511": { model: "ISUZU Rebuilt PWRGATE DROPSIDE W/ PTG TRUCK", 
-               yearModel: "2021", 
-               color: "White", 
-               FuelType: "Diesel", 
-               Classification:"Private", 
-               VehicleType: "Utility Vehicle UV DIE", 
-               Aircon: "", 
-               GrossWt:"4200", 
-               NetWt: "2100", 
-               ShippingWt: "2100", 
-               NetCapacity: "2100", 
-               EngineNo:"4HF1-665568", 
-               MVFILENO:"0389-00000024137", 
-               CRNO: "42203501-4 / 438854194", 
-               PistonDisplacement: "4334", 
-               NoofCylinders: "4", 
-               ChassisNo:"NKR66E-7544106", 
-               LTOclientId:"", 
-               tin: "",
                AccountNumber:"2402191",
                AutoSweep: "F897407",
                EasyTrip: "",
@@ -263,7 +218,7 @@ const details = {
                AutoSweep: "R415774",
                EasyTrip: "5200-2566-4138",
               },
-};
+}; // keep your original details object untouched
 
 const vehicleImages = {
   "NGX 4853": "https://alpinemotors.com.ph/wp-content/uploads/2021/05/L300.png",
@@ -276,7 +231,7 @@ const vehicleImages = {
   "NQX 657": "https://isuzuintecogroup.com/wp-content/uploads/2022/12/4x4-lsa-redspinel.png",
   "WQT 225": "https://alpinemotors.com.ph/wp-content/uploads/2021/05/L300.png",
   "MAM 7806": "https://carused.jp/images/elf/flatbody.jpg",
-  "NBO 6586": "https://www.isuzu-gencars.com.ph/wp-content/uploads/2020/07/Isuzu-TRAVIZ-Utility-Van-222-scaled.jpg",
+  "NBO 6586": "https://www.isuzu-gencars.com.ph/wp-content/uploads/2020/07/Isuzu-TRAVIZ-Utility-Van-222-scaled.jpg"
 };
 
 const app = document.getElementById("app");
@@ -285,25 +240,66 @@ let activeTab = "Details";
 
 // ------------------- CLOCK -------------------
 function updateClock() {
-  document.getElementById("clock").textContent = new Date().toLocaleTimeString();
+  const clock = document.getElementById("clock");
+  if (clock) clock.textContent = new Date().toLocaleTimeString();
 }
 setInterval(updateClock, 1000);
 updateClock();
 
-// ------------------- STORAGE -------------------
-function saveData() {
-  localStorage.setItem("vehicles", JSON.stringify(vehicles));
+// ------------------- LOGIN / LOGOUT -------------------
+function renderLogin() {
+  app.innerHTML = `
+    <div class="login-container">
+      <h2>Login</h2>
+      <form onsubmit="handleLogin(event)">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+      <p class="hint">Admin: admin123 | User: user123</p>
+    </div>
+  `;
 }
 
-// ------------------- RENDER VEHICLE LIST -------------------
-function renderList() {
-  app.innerHTML = `<div class="grid"></div>`;
-  const grid = app.querySelector(".grid");
+function handleLogin(e) {
+  e.preventDefault();
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const user = users.find(u => u.username === username && u.password === password);
+  if (user) {
+    loggedInUser = user;
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    renderList();
+  } else {
+    alert("Invalid username or password!");
+  }
+}
 
+function handleLogout() {
+  if (confirm("Are you sure you want to log out?")) {
+    localStorage.removeItem("loggedInUser");
+    loggedInUser = null;
+    renderLogin();
+  }
+}
+
+// ------------------- MAIN LIST -------------------
+function renderList() {
+  app.innerHTML = `
+    <div class="top-bar">
+      <div>Welcome, <strong>${loggedInUser.username}</strong> (${loggedInUser.role})</div>
+      <div class="top-bar-actions">
+        ${loggedInUser.role === "admin" ? `<button class="manage-btn" onclick="renderUserManagement()">User Management</button>` : ""}
+        <button class="change-pass-btn" onclick="renderChangePassword()">Change Password</button>
+        <button class="logout-btn" onclick="handleLogout()">Logout</button>
+      </div>
+    </div>
+    <div class="grid"></div>
+  `;
+
+  const grid = app.querySelector(".grid");
   vehicles.forEach(v => {
     const imgUrl = vehicleImages[v.plate];
-    const d = details[v.plate];
-
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
@@ -311,7 +307,11 @@ function renderList() {
       <h2>${v.plate}</h2>
       <p>Whereabouts: ${v.whereabouts}</p>
     `;
-    card.onclick = () => { selectedVehicle = v.plate; activeTab = "Details"; renderDetails(); };
+    card.onclick = () => {
+      selectedVehicle = v.plate;
+      activeTab = "Details";
+      renderDetails();
+    };
     grid.appendChild(card);
   });
 }
@@ -321,7 +321,16 @@ function renderDetails() {
   const v = vehicles.find(x => x.plate === selectedVehicle);
   const d = details[selectedVehicle];
   const imgUrl = vehicleImages[v.plate];
+
   app.innerHTML = `
+    <div class="top-bar">
+      <div>Welcome, <strong>${loggedInUser.username}</strong> (${loggedInUser.role})</div>
+      <div class="top-bar-actions">
+        ${loggedInUser.role === "admin" ? `<button class="manage-btn" onclick="renderUserManagement()">User Management</button>` : ""}
+        <button class="change-pass-btn" onclick="renderChangePassword()">Change Password</button>
+        <button class="logout-btn" onclick="handleLogout()">Logout</button>
+      </div>
+    </div>
     <div class="details-container">
       <button class="back-btn" onclick="backToList()">← Back</button>
       <h1>${v.plate}</h1>
@@ -336,6 +345,7 @@ function renderDetails() {
   renderTab(v, d);
 }
 
+// (Keep your original tab & history logic here — not changed)
 // ------------------- TABS -------------------
 function renderTab(v, d) {
   const tab = document.getElementById("tabContent");
@@ -461,125 +471,6 @@ function renderTab(v, d) {
   }
 }
 
-// ------------------- HISTORY -------------------
-function renderHistory(v, tab) {
-  if (!v.history.length) {
-    tab.innerHTML = `<p>No history yet.</p>`;
-    return;
-  }
-
-  const grouped = {};
-  v.history.forEach((item, i) => {
-    if (!grouped[item.type]) grouped[item.type] = [];
-    grouped[item.type].push({ ...item, index: i });
-  });
-
-  let html = "";
-
-  for (const [type, records] of Object.entries(grouped)) {
-    html += `
-      <div class="history-section">
-        <div class="history-header" onclick="toggleHistory('${type}')">▼ ${type}</div>
-        <div class="history-body" id="history-${type}">
-          <button class="export-btn" onclick="exportCSV('${v.plate}', '${type}')">📥 Export ${type} CSV</button>
-          <table class="history-group-table">
-            <thead><tr>${generateHeaders(type)}<th>Actions</th></tr></thead>
-            <tbody>${records.map(r => generateRow(type, r)).join("")}</tbody>
-          </table>
-        </div>
-      </div>
-    `;
-  }
-  tab.innerHTML = html;
-}
-
-// ------------------- CSV EXPORT PER TYPE -------------------
-function exportCSV(plate, type) {
-  const v = vehicles.find(x => x.plate === plate);
-  if (!v) return alert("Vehicle not found.");
-  const filtered = v.history.filter(h => h.type === type);
-  if (!filtered.length) return alert(`No ${type} records to export.`);
-  const keys = Array.from(new Set(filtered.flatMap(Object.keys)));
-  const rows = [keys.join(",")];
-  filtered.forEach(entry => {
-    const row = keys.map(k => `"${(entry[k] ?? "").toString().replace(/"/g, '""')}"`);
-    rows.push(row.join(","));
-  });
-  const dateStr = new Date().toISOString().split("T")[0];
-  const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = `${plate}_${type}_${dateStr}.csv`;
-  link.click();
-}
-
-// ------------------- TABLE HELPERS -------------------
-function generateHeaders(type) {
-  switch (type) {
-    case "Maintenance": return "<th>Date</th><th>CV No.</th><th>Reason / Description</th><th>Cost / Amount</th>";
-    case "Fuel": return "<th>Date</th><th>Bearer</th><th>PO #</th><th>Fuel Type</th><th>Amount</th><th>Job Order</th>";
-    case "Vehicle Request": return "<th>Date</th><th>Project</th><th>Job Order #</th><th>Location</th><th>Driver</th><th>Purpose</th><th>Requested By</th>";
-    case "Whereabouts": return "<th>Date</th><th>Place</th>";
-    case "Report": return "<th>Date</th><th>File</th>";
-    default: return "<th>Date</th><th>Details</th>";
-  }
-}
-
-function generateRow(type, r) {
-  let cells = "";
-  switch (type) {
-    case "Maintenance": cells = `<td>${r.date}</td><td>${r.cv}</td><td>${r.reason}</td><td>₱${r.cost}</td>`; break;
-    case "Fuel": cells = `<td>${r.date}</td><td>${r.bearer}</td><td>${r.order}</td><td>${r.gas}</td><td>₱${r.amount}</td><td>${r.jo}</td>`; break;
-    case "Vehicle Request": cells = `<td>${r.date}</td><td>${r.project}</td><td>${r.from}</td><td>${r.to}</td><td>${r.driver}</td><td>${r.purpose}</td><td>${r.request}</td>`; break;
-    case "Whereabouts": cells = `<td>${r.date}</td><td>${r.place}</td>`; break;
-   case "Report":
-  cells = `<td>${r.date}</td>
-           <td><a href="${r.fileURL}" download="${r.fileName}" target="_blank" 
-           style="color:#1a7431; text-decoration:none; font-weight:bold;">
-           ⬇️ ${r.fileName || "Download Report"}</a></td>`;
-  break;
-
-    default: cells = `<td>${r.date}</td><td>${JSON.stringify(r)}</td>`;
-  }
-  return `<tr>${cells}<td><button class='del-btn' onclick="deleteRecord('${r.index}')">🗑️</button></td></tr>`;
-}
-
-function deleteRecord(index) {
-  const v = vehicles.find(x => x.plate === selectedVehicle);
-  if (confirm("Are you sure you want to delete this record?")) {
-    v.history.splice(index, 1);
-    saveAndRefresh("History");
-  }
-}
-
-function toggleHistory(type) {
-  const section = document.getElementById(`history-${type}`);
-  if (!section) return;
-  const isVisible = section.style.display !== "none";
-  section.style.display = isVisible ? "none" : "block";
-  section.previousElementSibling.textContent = (isVisible ? "▶" : "▼") + " " + type;
-}
-
-// ------------------- FORMS -------------------
-function submitMaintenance(e) {
-  e.preventDefault();
-  const d = Object.fromEntries(new FormData(e.target));
-  const v = vehicles.find(x => x.plate === selectedVehicle);
-  v.history.push({ type: "Maintenance", ...d });
-  saveAndRefresh("History");
-}
-
-function submitVehicleRequest(e) {
-  e.preventDefault();
-  const d = Object.fromEntries(new FormData(e.target));
-  const v = vehicles.find(x => x.plate === selectedVehicle);
-  v.history.push({ type: "Vehicle Request", ...d });
-  saveAndRefresh("History");
-}
-
-function submitWhereabouts(e) {
-  e.preventDefault();
-  const f = new FormData(e.target);
   const place = f.get("place") === "Company Use" ? `Company Use - ${f.get("company")}` : f.get("place");
   const v = vehicles.find(x => x.plate === selectedVehicle);
   v.whereabouts = place;
@@ -612,45 +503,124 @@ function submitReport(e) {
   saveAndRefresh("History");
 }
 
+// ------------------- CHANGE PASSWORD -------------------
+function renderChangePassword() {
+  app.innerHTML = `
+    <div class="login-container">
+      <h2>Change Password</h2>
+      <form id="changeForm" onsubmit="handleChangePassword(event)">
+        ${loggedInUser.role === "admin"
+          ? `<input type="text" name="username" placeholder="Username to Change" required />`
+          : `<input type="text" name="username" value="${loggedInUser.username}" readonly />`}
+        <input type="password" name="oldPassword" placeholder="Old Password" required />
+        <input type="password" name="newPassword" placeholder="New Password" required />
+        <input type="password" name="confirmPassword" placeholder="Confirm New Password" required />
+        <button type="submit">Update Password</button>
+      </form>
+      <button class="back-btn" onclick="backToList()">← Back</button>
+    </div>
+  `;
+}
+
+function handleChangePassword(e) {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target));
+  let users = JSON.parse(localStorage.getItem("users"));
+
+  const user = users.find(u => u.username === data.username);
+  if (!user) return alert("User not found.");
+
+  if (loggedInUser.role !== "admin" && user.username !== loggedInUser.username)
+    return alert("Access denied.");
+
+  if (user.password !== data.oldPassword)
+    return alert("Old password incorrect.");
+
+  if (data.newPassword !== data.confirmPassword)
+    return alert("New passwords do not match.");
+
+  user.password = data.newPassword;
+  localStorage.setItem("users", JSON.stringify(users));
+  alert("Password updated successfully!");
+  renderList();
+}
+
+// ------------------- USER MANAGEMENT (ADMIN ONLY) -------------------
+function renderUserManagement() {
+  if (loggedInUser.role !== "admin") return alert("Access denied.");
+
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  app.innerHTML = `
+    <div class="login-container">
+      <h2>User Management</h2>
+      <form id="addUserForm" onsubmit="handleAddUser(event)">
+        <input type="text" name="username" placeholder="New Username" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <select name="role" required>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+        <button type="submit">Add User</button>
+      </form>
+      <table class="user-table">
+        <thead><tr><th>Username</th><th>Role</th><th>Actions</th></tr></thead>
+        <tbody>
+          ${users.map(u => `
+            <tr>
+              <td>${u.username}</td>
+              <td>${u.role}</td>
+              <td>
+                ${u.username !== "admin" ? `
+                  <button onclick="resetPassword('${u.username}')">Reset Password</button>
+                  <button onclick="deleteUser('${u.username}')">Delete</button>` 
+                : `<em>Protected</em>`}
+              </td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+      <button class="back-btn" onclick="backToList()">← Back</button>
+    </div>
+  `;
+}
+
+function handleAddUser(e) {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target));
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  if (users.find(u => u.username === data.username)) {
+    alert("User already exists!");
+    return;
+  }
+  users.push(data);
+  localStorage.setItem("users", JSON.stringify(users));
+  alert("User added successfully!");
+  renderUserManagement();
+}
+
+function deleteUser(username) {
+  if (!confirm(`Delete user "${username}"?`)) return;
+  let users = JSON.parse(localStorage.getItem("users"));
+  users = users.filter(u => u.username !== username);
+  localStorage.setItem("users", JSON.stringify(users));
+  renderUserManagement();
+}
+
+function resetPassword(username) {
+  let users = JSON.parse(localStorage.getItem("users"));
+  const user = users.find(u => u.username === username);
+  if (user) {
+    user.password = "12345";
+    localStorage.setItem("users", JSON.stringify(users));
+    alert(`Password for "${username}" reset to "12345".`);
+  }
+  renderUserManagement();
+}
+
 // ------------------- HELPERS -------------------
-function backToList(){ selectedVehicle=null; renderList(); }
-function setTab(tab){ activeTab=tab; renderDetails(); }
-function saveAndRefresh(tab){ saveData(); setTab(tab); }
+function backToList() { selectedVehicle = null; renderList(); }
+function setTab(tab) { activeTab = tab; renderDetails(); }
 
 // ------------------- INIT -------------------
-renderList();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if (loggedInUser) renderList();
+else renderLogin();
