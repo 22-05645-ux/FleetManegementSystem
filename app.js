@@ -589,12 +589,20 @@ function submitFuel(e) {
 }
 
 function submitReport(e) {
-  e.preventDefault();
-  const f = new FormData(e.target);
+  const fileInput = e.target.report.files[0];
+  if (!fileInput) return alert("Please select a file first.");
+
+  const fileURL = URL.createObjectURL(fileInput);
   const v = vehicles.find(x => x.plate === selectedVehicle);
-  v.history.push({ type: "Reports", date: new Date().toISOString().split("T")[0],
-                   report: f.get("report") });
-  saveAndRefresh("Reports");
+
+  v.history.push({
+    type: "Report",
+    date: new Date().toISOString().split("T")[0],
+    fileName: fileInput.name,
+    fileURL: fileURL
+  });
+
+  saveAndRefresh("History");
 }
 
 // ===========================================================
@@ -730,6 +738,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
