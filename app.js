@@ -108,7 +108,7 @@ const details = {
                AutoSweep: "R333835",
                EasyTrip: "",
               },
-  "CBP 5511": { model: "REBUILT ISUZE PWRGATE DROPSIDE W/ PTG TRUCK", 
+  "CBP 5511": { model: "ISUZU Rebuilt PWRGATE DROPSIDE W/ PTG TRUCK", 
                yearModel: "2021", 
                color: "White", 
                FuelType: "Diesel", 
@@ -619,6 +619,7 @@ function saveAndRefresh(tab){ saveData(); setTab(tab); }
 
 // ------------------- INIT -------------------
 renderList();
+
 
 
 
