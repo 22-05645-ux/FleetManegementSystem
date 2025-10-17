@@ -280,49 +280,6 @@ const vehicleImages = {
 };
 
 const app = document.getElementById("app");
-// ------------------- LOGIN SYSTEM -------------------
-// ------------------- LOGIN SYSTEM -------------------
-const users = [
-  { username: "admin", password: "12345", role: "admin" },
-  { username: "fleet", password: "cifra2025", role: "viewer" }
-];
-
-
-function renderLogin() {
-  app.innerHTML = `
-    <div class="login-container">
-      <h2>Fleet Management System</h2>
-      <p class="login-subtitle">Cifra Industrial Services Corporation</p>
-      <form id="loginForm" onsubmit="handleLogin(event)">
-        <input type="text" name="username" placeholder="Username" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <button type="submit">Log In</button>
-      </form>
-      <p class="login-note">Authorized users only</p>
-    </div>
-  `;
-}
-
-function handleLogin(e) {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.target));
-  const user = users.find(u => u.username === data.username && u.password === data.password);
-
-  if (user) {
-    localStorage.setItem("loggedIn", "true");
-    localStorage.setItem("userRole", user.role);
-    localStorage.setItem("username", user.username);
-    renderList();
-  } else {
-    alert("Invalid username or password.");
-  }
-}
-
-
-function handleLogout() {
-  localStorage.removeItem("loggedIn");
-  renderLogin();
-}
 
 let selectedVehicle = null;
 let activeTab = "Details";
@@ -701,6 +658,7 @@ if (localStorage.getItem("loggedIn") === "true") {
 } else {
   renderLogin();
 }
+
 
 
 
