@@ -339,6 +339,7 @@ function renderList() {
 
 function renderDetails() {
   const v = vehicles.find(x => x.plate === selectedVehicle);
+  const d = details[selectedVehicle];
   const imgUrl = vehicleImages[v.plate];
 
   app.innerHTML = `
@@ -738,6 +739,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
