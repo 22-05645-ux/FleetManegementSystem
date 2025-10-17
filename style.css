@@ -1,5 +1,4 @@
-/* ====== ORIGINAL STYLE RESTORED ====== */
-
+/* ---------------- ORIGINAL STYLE.CSS ---------------- */
 body {
   font-family: Arial, sans-serif;
   background-color: #e9f5ee;
@@ -63,7 +62,7 @@ body {
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
-/* GRID */
+/* VEHICLE GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -89,9 +88,9 @@ body {
   }
 }
 
-/* CARD DESIGN */
+/* VEHICLE CARD */
 .card {
-  background: #fff;
+  background-color: #ffffff;
   border-radius: 16px;
   padding: 25px;
   text-align: center;
@@ -142,9 +141,92 @@ body {
   font-size: 14px;
 }
 
-/* ===== NEW FEATURES ADDED BELOW ===== */
+/* TABLES */
+table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
-/* LOGIN & CHANGE PASSWORD FORM */
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #0b6623;
+  color: white;
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #f2f2f2;
+}
+
+button {
+  background-color: #0b6623;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  background-color: #085a1d;
+}
+
+/* ---------------- ADDED FEATURES BELOW ---------------- */
+
+/* USER INFO SECTION */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.username {
+  font-weight: 600;
+  color: #ffffff;
+  text-transform: capitalize;
+}
+
+/* CHANGE PASSWORD BUTTON */
+.change-pass-btn {
+  background: #ffa500;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 10px;
+  transition: 0.2s;
+}
+.change-pass-btn:hover {
+  background: #e69500;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.logout-btn:hover {
+  background: #d32f2f;
+}
+
+/* LOGIN / CHANGE PASSWORD FORM */
 .login-container {
   background: #f5fff8;
   border-radius: 12px;
@@ -187,12 +269,17 @@ body {
   width: 100%;
   margin-top: 10px;
 }
-
 .login-container button:hover {
   background: #145e26;
 }
 
-/* BACK BUTTON (for password form) */
+.login-note {
+  font-size: 13px;
+  color: #666;
+  margin-top: 10px;
+}
+
+/* BACK BUTTON (used in Change Password) */
 .back-btn {
   background: #e9ecef;
   color: #222;
@@ -206,46 +293,4 @@ body {
 }
 .back-btn:hover {
   background: #dfe6e9;
-}
-
-/* USER INFO */
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.username {
-  font-weight: 600;
-  color: #ffffff;
-  text-transform: capitalize;
-}
-
-/* CHANGE PASSWORD BUTTON */
-.change-pass-btn {
-  background: #ffa500;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-left: 10px;
-}
-.change-pass-btn:hover {
-  background: #e69500;
-}
-
-/* LOGOUT BUTTON */
-.logout-btn {
-  background: #f44336;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.logout-btn:hover {
-  background: #d32f2f;
 }
