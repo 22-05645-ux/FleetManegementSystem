@@ -1,4 +1,9 @@
-// ------------------- USERS -------------------
+// ===========================================================
+// === CISC FLEET MANAGEMENT SYSTEM - APP.JS (PART 1/2) ===
+// ===========================================================
+// Includes: Initialization, Login, Role Handling, Dashboard, Vehicle Grid
+
+// ------------------- USER DATA -------------------
 let users = JSON.parse(localStorage.getItem("users")) || [
   { username: "admin", password: "admin123", role: "admin" },
   { username: "user", password: "user123", role: "user" }
@@ -22,204 +27,6 @@ let vehicles = JSON.parse(localStorage.getItem("vehicles")) || [
   { plate: "NBO 6586", whereabouts: "Batangas City", history: [] }
 ];
 
-const details = {
-   "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB", 
-              yearModel: "2013", 
-              Color: "Polar White", 
-              FuelType: "Diesel", 
-              Classification:"Private-(PVT)", 
-              VehicleType: "Utility Vehicle FB", 
-              Aircon: "Non-Aircon", 
-              GrossWt:"3200", 
-              NetWt: "1600", 
-              ShippingWt: "1600", 
-              NetCapacity: "1600", 
-              EngineNo:"4D56AAH7453", 
-              MVFILENO:"1336-00000382369", 
-              CRNO: "178100495", 
-              PistonDisplacement: "2477", 
-              NoofCylinders: "4", 
-              ChassisNo:"", 
-              LTOclientId:"C-22-0070546", 
-              tin: "000-003-934-488", 
-              AccountNumber:"558267",
-               AutoSweep: "R178408",
-               EasyTrip: "5200-1890-1081",
-              OR:"1368-000000116000",
-             },
-  "NGX 4853": { model: "Mitsubishi L300", 
-               yearModel: "", 
-               color: "White", 
-               FuelType: "", 
-               Classification:"", 
-               VehicleType: "", 
-               Aircon: "", 
-               GrossWt:"", 
-               NetWt: "", 
-               ShippingWt: "", 
-               NetCapacity: "", 
-               EngineNo:"", 
-               MVFILENO:"", 
-               CRNO: "44654417-3", 
-               PistonDisplacement: "", 
-               NoofCylinders: "", 
-               ChassisNo:"", 
-               LTOclientId:"", 
-               tin: "",
-               AccountNumber: "2388348",
-               AutoSweep: "F883794",
-               EasyTrip: "5400-0010-2233",
-               OR: "1902357332",
-              },
-  "NGX 4856": { model: "Mitsubishi L300", 
-               yearModel: "", 
-               color: "White", 
-               FuelType: "", 
-               Classification:"", 
-               VehicleType: "", 
-               Aircon: "", 
-               GrossWt:"", 
-               NetWt: "", 
-               ShippingWt: "", 
-               NetCapacity: "", 
-               AccountNumber:"2402191",
-               AutoSweep: "F897407",
-               EasyTrip: "",
-               OR:"2187876950",
-              },
-  "CBP 1336": { model: "ISUZU Rebuilt Dropside W/ PTG Truck", 
-               yearModel: "2021", 
-               color: "White", 
-               FuelType: "Diesel", 
-               Classification:"Private", 
-               VehicleType: "Utility Vehicle|UV|DIE", 
-               Aircon: "", 
-               GrossWt:"4200", 
-               NetWt: "2100", 
-               ShippingWt: "2100", 
-               NetCapacity: "2100", 
-               EngineNo:"4HG1-858189", 
-               MVFILENO:"0389-00000019723", 
-               CRNO: "38358340-6 / 434598441", 
-               PistonDisplacement: "4570", 
-               NoofCylinders: "4", 
-               ChassisNo:"NKR71E-7426960", 
-               LTOclientId:"", 
-               tin: "",
-               AccountNumber:"2417423",
-               AutoSweep: "F912083",
-               EasyTrip: "5400-0013-9874",
-               OR:"0404-000000095320",
-              },
-  "ZSG 105": { model: "Mitsubishi L300", 
-              yearModel: "", 
-              color: "White", 
-              FuelType: "", 
-              Classification:"", 
-              VehicleType: "", 
-              Aircon: "", 
-              GrossWt:"", 
-              NetWt: "", 
-              ShippingWt: "", 
-              NetCapacity: "", 
-              EngineNo:"", 
-              MVFILENO:"", 
-              CRNO: "", 
-              PistonDisplacement: "", 
-              NoofCylinders: "", 
-              ChassisNo:"", 
-              LTOclientId:"", 
-              tin: "",
-              AccountNumber:"780819",
-               AutoSweep: "R331861",
-               EasyTrip: "5200-1506-1167",
-             },
-  "UOF 225": { model: "ISUZU SOBIDA", 
-              yearModel: "", 
-              color: "GREEN", 
-              FuelType: "", 
-              Classification:"", 
-              VehicleType: "", 
-              Aircon: "", 
-              GrossWt:"", 
-              NetWt: "", 
-              ShippingWt: "", 
-              NetCapacity: "", 
-              EngineNo:"", 
-              MVFILENO:"", 
-              CRNO: "", 
-              PistonDisplacement: "",
-              NoofCylinders: "",
-              ChassisNo:"", 
-              LTOclientId:"",
-              tin: "", 
-              AccountNumber:"1247218",
-               AutoSweep: "R761904",
-               EasyTrip: "5200-1893-0261",
-             },
-  "NQX 657": { model: "ISUZU D-MAX", 
-              yearModel: "2010", 
-              color: "Canyon Red", 
-              FuelType: "Diesel", 
-              Classification:"Private-(PVT)",
-              VehicleType: "Utility Vehicle Double Cab", 
-              Aircon: "R134a", 
-              GrossWt:"2650", 
-              NetWt: "", 
-              ShippingWt: "",
-              NetCapacity: "", 
-              EngineNo:"4JJ1HD1728", 
-              MVFILENO:"", 
-              CRNO: "", 
-              PistonDisplacement: "",
-              NoofCylinders: "",
-              ChassisNo:"PABTFR85HA0004745", 
-              LTOclientId:"22-900101-2440171", 
-              tin: "000865491061", 
-              AccountNumber:"763041",
-              AutoSweep: "NQX657",
-              EasyTrip: "5200-3355-7983",
-              OR:"0404-000000106583",
-             },
-  "MAM 7806": { model: "TRUCK", 
-               yearModel: "", 
-               color: "GREEN", 
-               FuelType: "",
-               Classification:"", 
-               VehicleType: "", 
-               Aircon: "", 
-               GrossWt:"", 
-               NetWt: "", 
-               ShippingWt: "", 
-               NetCapacity: "", 
-               EngineNo:"",
-               MVFILENO:"", 
-               CRNO: "40689765-4", 
-               PistonDisplacement: "", 
-               NoofCylinders: "", 
-               ChassisNo:"", 
-               LTOclientId:"", 
-               tin: "", 
-               AccountNumber:"2190558",
-               AutoSweep: "F690216",
-               EasyTrip: "5200-3587-1718",
-               OR:"0404-000000095251",
-              },
-  "NBO 6586": { model: "EURO-IV", 
-               yearBought: "", 
-               LTOClientID: "C-22-0070546", 
-               yearModel: "2018", 
-               color: "Arc White", 
-               FuelType: "Diesel",
-               Classification:"Private-(PVT)", 
-               VehicleType: "Utility Vehicle PASSENGER VAN", 
-               Aircon: "Non-Aircon", 
-               AccountNumber:"884984",
-               AutoSweep: "R415774",
-               EasyTrip: "5200-2566-4138",
-              },
-}; // keep your original details object untouched
-
 const vehicleImages = {
   "NGX 4853": "https://alpinemotors.com.ph/wp-content/uploads/2021/05/L300.png",
   "NGX 4856": "https://alpinemotors.com.ph/wp-content/uploads/2021/05/L300.png",
@@ -234,6 +41,7 @@ const vehicleImages = {
   "NBO 6586": "https://www.isuzu-gencars.com.ph/wp-content/uploads/2020/07/Isuzu-TRAVIZ-Utility-Van-222-scaled.jpg"
 };
 
+// ------------------- VARIABLES -------------------
 const app = document.getElementById("app");
 let selectedVehicle = null;
 let activeTab = "Details";
@@ -246,7 +54,10 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// ------------------- LOGIN / LOGOUT -------------------
+// ===========================================================
+// === LOGIN SECTION ===
+// ===========================================================
+
 function renderLogin() {
   app.innerHTML = `
     <div class="login-container">
@@ -283,7 +94,10 @@ function handleLogout() {
   }
 }
 
-// ------------------- MAIN LIST -------------------
+// ===========================================================
+// === DASHBOARD / VEHICLE GRID SECTION ===
+// ===========================================================
+
 function renderList() {
   app.innerHTML = `
     <div class="top-bar">
@@ -316,17 +130,25 @@ function renderList() {
   });
 }
 
-// ------------------- VEHICLE DETAILS -------------------
+// ===========================================================
+// === PART 2 CONTAINS VEHICLE DETAILS, TABS, CHANGE PASSWORD,
+// === USER MANAGEMENT, AND HELPER FUNCTIONS
+// ===========================================================
+
+// ===========================================================
+// === VEHICLE DETAILS SECTION ===
+// ===========================================================
+
 function renderDetails() {
   const v = vehicles.find(x => x.plate === selectedVehicle);
-  const d = details[selectedVehicle];
   const imgUrl = vehicleImages[v.plate];
 
   app.innerHTML = `
     <div class="top-bar">
       <div>Welcome, <strong>${loggedInUser.username}</strong> (${loggedInUser.role})</div>
       <div class="top-bar-actions">
-        ${loggedInUser.role === "admin" ? `<button class="manage-btn" onclick="renderUserManagement()">User Management</button>` : ""}
+        ${loggedInUser.role === "admin"
+          ? `<button class="manage-btn" onclick="renderUserManagement()">User Management</button>` : ""}
         <button class="change-pass-btn" onclick="renderChangePassword()">Change Password</button>
         <button class="logout-btn" onclick="handleLogout()">Logout</button>
       </div>
@@ -337,173 +159,186 @@ function renderDetails() {
       <img src="${imgUrl}" class="details-image" alt="${v.plate}" />
       <div class="tab-buttons">
         ${["Details","Maintenance","Vehicle Request","Whereabouts","Fuel","Reports","History"]
-          .map(tab => `<button onclick="setTab('${tab}')" class="${activeTab===tab?'active':''}">${tab}</button>`).join("")}
+          .map(tab => `<button onclick="setTab('${tab}')" class="${activeTab===tab?'active':''}">${tab}</button>`)
+          .join("")}
       </div>
       <div id="tabContent"></div>
     </div>
   `;
-  renderTab(v, d);
+
+  renderTab(v);
 }
 
-// (Keep your original tab & history logic here — not changed)
-// ------------------- TABS -------------------
-function renderTab(v, d) {
-  const tab = document.getElementById("tabContent");
+// ===========================================================
+// === VEHICLE TAB CONTENT RENDERING ===
+// ===========================================================
 
-  if (activeTab === "Details") {
-  tab.innerHTML = `
-    <table class="details-table">
-      <tr>
-        <th>Model:</th><td>${d.model || "-"}</td>
-        <th>Year Model:</th><td>${d.yearModel || d.yearBought || "-"}</td>
-      </tr>
-      <tr>
-        <th>Color:</th><td>${d.Color || d.color || "-"}</td>
-        <th>Fuel Type:</th><td>${d.FuelType || "-"}</td>
-      </tr>
-      <tr>
-        <th>Classification:</th><td>${d.Classification || "-"}</td>
-        <th>Vehicle Type:</th><td>${d.VehicleType || "-"}</td>
-      </tr>
-      <tr>
-        <th>Gross Weight:</th><td>${d.GrossWt || "-"}</td>
-        <th>Net Weight:</th><td>${d.NetWt || "-"}</td>
-      </tr>
-      <tr>
-        <th>Shipping Weight:</th><td>${d.ShippingWt || "-"}</td>
-        <th>Net Capacity:</th><td>${d.NetCapacity || "-"}</td>
-      </tr>
-      <tr>
-        <th>No. of Cylinders:</th><td>${d.NoofCylinders || "-"}</td>
-        <th>Piston Displacement:</th><td>${d.PistonDisplacement || "-"}</td>
-      </tr>
-      <tr>
-        <th>Engine No.:</th><td>${d.EngineNo || "-"}</td>
-        <th>Chassis No.:</th><td>${d.ChassisNo || "-"}</td>
-      </tr>
-      <tr>
-        <th>MV FILE NO.:</th><td>${d.MVFILENO || "-"}</td>
-         <th>LTO Client ID:</th><td>${d.LTOclientId || d.LTOClientID || "-"}</td>
-      </tr>
-      <tr>
-        <th>TIN:</th><td>${d.tin || "-"}</td>
-        <th>Account Number:</th><td>${d.AccountNumber || "-"}</td>
-      </tr>
-      <tr>
-        <th>AutoSweep No.:</th><td>${d.AutoSweep || "-"}</td>
-        <th>Easy Trip No.:</th><td>${d.EasyTrip || "-"}</td>
-      </tr>
-      <tr>
-      <th>OR No.:</th><td>${d.OR || "-"}</td>
-       <th>CR No.:</th><td>${d.CRNO || "-"}</td>
-      </tr>
-    </table>
-  `;
-}
+function renderTab(v) {
+  const content = document.getElementById("tabContent");
+  if (!content) return;
 
-  else if (activeTab === "Maintenance") {
-    tab.innerHTML = `
-      <form onsubmit="submitMaintenance(event)">
-        <input type="date" name="date" required />
-        <input type="text" name="cv" placeholder="CV Number" required />
-        <input type="text" name="reason" placeholder="Reason / Description" required />
-        <input type="number" name="cost" placeholder="Cost / Amount" required />
-        <button type="submit">Save</button>
-      </form>
-    `;
-  } 
-  else if (activeTab === "Vehicle Request") {
-    tab.innerHTML = `
-      <form onsubmit="submitVehicleRequest(event)">
-        <input type="date" name="date" required />
-        <input type="text" name="project" placeholder="Project" required />
-        <input type="text" name="from" placeholder="Job Order #" required />
-        <input type="text" name="to" placeholder="Location" required />
-        <input type="text" name="driver" placeholder="Driver" required />
-        <input type="text" name="purpose" placeholder="Purpose" required />
-        <input type="text" name="request" placeholder="Requested By" required />
-        <button type="submit">Save</button>
-      </form>
-    `;
-  } 
-  else if (activeTab === "Whereabouts") {
-    tab.innerHTML = `
-      <form onsubmit="submitWhereabouts(event)">
-        <select name="place" required>
-          <option value="">Select Location</option>
-          <option>Batangas City</option>
-          <option>Makati</option>
-          <option>Company Use</option>
-          <option>Repair Shop</option>
-        </select>
-        <input type="text" name="company" placeholder="If Company Use, specify destination" />
-        <button type="submit">Save</button>
-      </form>
-    `;
-  } 
-  else if (activeTab === "Fuel") {
-    tab.innerHTML = `
-      <form onsubmit="submitFuel(event)">
-        <input type="date" name="date" required />
-        <input type="text" name="bearer" placeholder="Bearer" required />
-        <input type="text" name="order" placeholder="PO #" required />
-        <select name="gas" required>
-          <option value="">Select Fuel Type</option>
-          <option>Diesel</option>
-          <option>Gasoline</option>
-        </select>
-        <input type="number" name="amount" placeholder="Amount" required />
-        <input type="text" name="jo" placeholder="Job Order" required/>
-        <button type="submit">Save</button>
-      </form>
-    `;
-  } 
-  else if (activeTab === "Reports") {
-    tab.innerHTML = `
-      <form onsubmit="submitReport(event)">
-      <input type="file" name="report" required />
-      <button type="submit">📤 Upload Report</button>
-    </form>
-    `;
-  } 
-  else if (activeTab === "History") {
-    renderHistory(v, tab);
+  switch (activeTab) {
+    case "Details":
+      content.innerHTML = `
+        <table class="details-table">
+          <tr><th>Plate Number:</th><td>${v.plate}</td></tr>
+          <tr><th>Whereabouts:</th><td>${v.whereabouts}</td></tr>
+        </table>
+      `;
+      break;
+
+    case "Maintenance":
+      content.innerHTML = `
+        <h3>Maintenance Records</h3>
+        ${renderHistory(v, "Maintenance")}
+        ${loggedInUser.role === "admin"
+          ? `<form onsubmit="submitMaintenance(event)">
+              <input name="cv" placeholder="CV Number" required />
+              <input name="reason" placeholder="Description" required />
+              <button type="submit">Add Maintenance</button>
+            </form>` : `<p>Read-only access.</p>`}
+      `;
+      break;
+
+    case "Vehicle Request":
+      content.innerHTML = `
+        <h3>Vehicle Requests</h3>
+        ${renderHistory(v, "Request")}
+        ${loggedInUser.role === "admin"
+          ? `<form onsubmit="submitRequest(event)">
+              <input name="purpose" placeholder="Purpose" required />
+              <input name="destination" placeholder="Destination" required />
+              <button type="submit">Add Request</button>
+            </form>` : `<p>Read-only access.</p>`}
+      `;
+      break;
+
+    case "Whereabouts":
+      content.innerHTML = `
+        <h3>Whereabouts</h3>
+        ${renderHistory(v, "Whereabouts")}
+        ${loggedInUser.role === "admin"
+          ? `<form onsubmit="submitWhereabouts(event)">
+              <input name="place" placeholder="Current Location" required />
+              <button type="submit">Update</button>
+            </form>` : `<p>Read-only access.</p>`}
+      `;
+      break;
+
+    case "Fuel":
+      content.innerHTML = `
+        <h3>Fuel Logs</h3>
+        ${renderHistory(v, "Fuel")}
+        ${loggedInUser.role === "admin"
+          ? `<form onsubmit="submitFuel(event)">
+              <input name="liters" placeholder="Liters" type="number" required />
+              <input name="date" type="date" required />
+              <button type="submit">Add Record</button>
+            </form>` : `<p>Read-only access.</p>`}
+      `;
+      break;
+
+    case "Reports":
+      content.innerHTML = `
+        <h3>Reports</h3>
+        ${renderHistory(v, "Reports")}
+        ${loggedInUser.role === "admin"
+          ? `<form onsubmit="submitReport(event)">
+              <input name="report" placeholder="Report Summary" required />
+              <button type="submit">Submit Report</button>
+            </form>` : `<p>Read-only access.</p>`}
+      `;
+      break;
+
+    case "History":
+      content.innerHTML = `
+        <h3>Full Vehicle History</h3>
+        ${renderFullHistory(v)}
+      `;
+      break;
   }
 }
 
-  const place = f.get("place") === "Company Use" ? `Company Use - ${f.get("company")}` : f.get("place");
+// ===========================================================
+// === HISTORY RENDERING ===
+// ===========================================================
+
+function renderHistory(v, type) {
+  const filtered = (v.history || []).filter(h => h.type === type);
+  if (filtered.length === 0) return `<p>No ${type} records found.</p>`;
+  return `
+    <ul>
+      ${filtered.map(h =>
+        `<li>${h.date} – ${h.details || h.reason || h.place || h.report || ""}</li>`
+      ).join("")}
+    </ul>
+  `;
+}
+
+function renderFullHistory(v) {
+  if (!v.history || v.history.length === 0) return `<p>No history available.</p>`;
+  return `
+    <ul>
+      ${v.history.map(h =>
+        `<li><strong>${h.type}</strong> – ${h.date} – ${h.details || h.reason || h.place || h.report || ""}</li>`
+      ).join("")}
+    </ul>
+  `;
+}
+
+// ===========================================================
+// === VEHICLE FORMS (ADMIN ONLY) ===
+// ===========================================================
+
+function submitMaintenance(e) {
+  e.preventDefault();
+  const f = new FormData(e.target);
   const v = vehicles.find(x => x.plate === selectedVehicle);
-  v.whereabouts = place;
-  v.history.push({ type: "Whereabouts", date: new Date().toISOString().split("T")[0], place });
-  saveAndRefresh("Details");
+  v.history.push({ type: "Maintenance", date: new Date().toISOString().split("T")[0],
+                   cv: f.get("cv"), reason: f.get("reason") });
+  saveAndRefresh("Maintenance");
+}
+
+function submitRequest(e) {
+  e.preventDefault();
+  const f = new FormData(e.target);
+  const v = vehicles.find(x => x.plate === selectedVehicle);
+  v.history.push({ type: "Request", date: new Date().toISOString().split("T")[0],
+                   purpose: f.get("purpose"), destination: f.get("destination") });
+  saveAndRefresh("Vehicle Request");
+}
+
+function submitWhereabouts(e) {
+  e.preventDefault();
+  const f = new FormData(e.target);
+  const v = vehicles.find(x => x.plate === selectedVehicle);
+  v.whereabouts = f.get("place");
+  v.history.push({ type: "Whereabouts", date: new Date().toISOString().split("T")[0],
+                   place: f.get("place") });
+  saveAndRefresh("Whereabouts");
 }
 
 function submitFuel(e) {
   e.preventDefault();
-  const d = Object.fromEntries(new FormData(e.target));
+  const f = new FormData(e.target);
   const v = vehicles.find(x => x.plate === selectedVehicle);
-  v.history.push({ type: "Fuel", ...d });
-  saveAndRefresh("History");
+  v.history.push({ type: "Fuel", date: f.get("date"), liters: f.get("liters") + " L" });
+  saveAndRefresh("Fuel");
 }
 
 function submitReport(e) {
-  const fileInput = e.target.report.files[0];
-  if (!fileInput) return alert("Please select a file first.");
-
-  const fileURL = URL.createObjectURL(fileInput);
+  e.preventDefault();
+  const f = new FormData(e.target);
   const v = vehicles.find(x => x.plate === selectedVehicle);
-
-  v.history.push({
-    type: "Report",
-    date: new Date().toISOString().split("T")[0],
-    fileName: fileInput.name,
-    fileURL: fileURL
-  });
-
-  saveAndRefresh("History");
+  v.history.push({ type: "Reports", date: new Date().toISOString().split("T")[0],
+                   report: f.get("report") });
+  saveAndRefresh("Reports");
 }
 
-// ------------------- CHANGE PASSWORD -------------------
+// ===========================================================
+// === CHANGE PASSWORD SECTION ===
+// ===========================================================
+
 function renderChangePassword() {
   app.innerHTML = `
     <div class="login-container">
@@ -526,29 +361,26 @@ function handleChangePassword(e) {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(e.target));
   let users = JSON.parse(localStorage.getItem("users"));
-
   const user = users.find(u => u.username === data.username);
   if (!user) return alert("User not found.");
-
   if (loggedInUser.role !== "admin" && user.username !== loggedInUser.username)
     return alert("Access denied.");
-
   if (user.password !== data.oldPassword)
     return alert("Old password incorrect.");
-
   if (data.newPassword !== data.confirmPassword)
     return alert("New passwords do not match.");
-
   user.password = data.newPassword;
   localStorage.setItem("users", JSON.stringify(users));
   alert("Password updated successfully!");
   renderList();
 }
 
-// ------------------- USER MANAGEMENT (ADMIN ONLY) -------------------
+// ===========================================================
+// === USER MANAGEMENT SECTION (ADMIN ONLY) ===
+// ===========================================================
+
 function renderUserManagement() {
   if (loggedInUser.role !== "admin") return alert("Access denied.");
-
   const users = JSON.parse(localStorage.getItem("users")) || [];
   app.innerHTML = `
     <div class="login-container">
@@ -571,8 +403,8 @@ function renderUserManagement() {
               <td>${u.role}</td>
               <td>
                 ${u.username !== "admin" ? `
-                  <button onclick="resetPassword('${u.username}')">Reset Password</button>
-                  <button onclick="deleteUser('${u.username}')">Delete</button>` 
+                  <button onclick="resetPassword('${u.username}')">Reset</button>
+                  <button onclick="deleteUser('${u.username}')">Delete</button>`
                 : `<em>Protected</em>`}
               </td>
             </tr>
@@ -588,10 +420,7 @@ function handleAddUser(e) {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(e.target));
   let users = JSON.parse(localStorage.getItem("users")) || [];
-  if (users.find(u => u.username === data.username)) {
-    alert("User already exists!");
-    return;
-  }
+  if (users.find(u => u.username === data.username)) return alert("User already exists!");
   users.push(data);
   localStorage.setItem("users", JSON.stringify(users));
   alert("User added successfully!");
@@ -617,10 +446,26 @@ function resetPassword(username) {
   renderUserManagement();
 }
 
-// ------------------- HELPERS -------------------
+// ===========================================================
+// === HELPER FUNCTIONS ===
+// ===========================================================
+
+function saveData() {
+  localStorage.setItem("vehicles", JSON.stringify(vehicles));
+}
+
+function saveAndRefresh(tab) {
+  saveData();
+  setTab(tab);
+}
+
 function backToList() { selectedVehicle = null; renderList(); }
 function setTab(tab) { activeTab = tab; renderDetails(); }
 
-// ------------------- INIT -------------------
+// ===========================================================
+// === INITIALIZE APP ===
+// ===========================================================
+
 if (loggedInUser) renderList();
 else renderLogin();
+
