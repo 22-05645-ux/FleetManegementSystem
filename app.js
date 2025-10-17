@@ -280,7 +280,6 @@ const vehicleImages = {
 };
 
 const app = document.getElementById("app");
-
 let selectedVehicle = null;
 let activeTab = "Details";
 
@@ -342,22 +341,55 @@ function renderTab(v, d) {
   const tab = document.getElementById("tabContent");
 
   if (activeTab === "Details") {
-    tab.innerHTML = `
-      <table class="details-table">
-        <tr><th>Model:</th><td>${d.model || "-"}</td><th>Year Model:</th><td>${d.yearModel || d.yearBought || "-"}</td></tr>
-        <tr><th>Color:</th><td>${d.Color || d.color || "-"}</td><th>Fuel Type:</th><td>${d.FuelType || "-"}</td></tr>
-        <tr><th>Classification:</th><td>${d.Classification || "-"}</td><th>Vehicle Type:</th><td>${d.VehicleType || "-"}</td></tr>
-        <tr><th>Gross Weight:</th><td>${d.GrossWt || "-"}</td><th>Net Weight:</th><td>${d.NetWt || "-"}</td></tr>
-        <tr><th>Shipping Weight:</th><td>${d.ShippingWt || "-"}</td><th>Net Capacity:</th><td>${d.NetCapacity || "-"}</td></tr>
-        <tr><th>No. of Cylinders:</th><td>${d.NoofCylinders || "-"}</td><th>Piston Displacement:</th><td>${d.PistonDisplacement || "-"}</td></tr>
-        <tr><th>Engine No.:</th><td>${d.EngineNo || "-"}</td><th>Chassis No.:</th><td>${d.ChassisNo || "-"}</td></tr>
-        <tr><th>MV FILE NO.:</th><td>${d.MVFILENO || "-"}</td><th>LTO Client ID:</th><td>${d.LTOclientId || d.LTOClientID || "-"}</td></tr>
-        <tr><th>TIN:</th><td>${d.tin || "-"}</td><th>Account Number:</th><td>${d.AccountNumber || "-"}</td></tr>
-        <tr><th>AutoSweep No.:</th><td>${d.AutoSweep || "-"}</td><th>Easy Trip No.:</th><td>${d.EasyTrip || "-"}</td></tr>
-        <tr><th>OR No.:</th><td>${d.OR || "-"}</td><th>CR No.:</th><td>${d.CRNO || "-"}</td></tr>
-      </table>
-    `;
-  }
+  tab.innerHTML = `
+    <table class="details-table">
+      <tr>
+        <th>Model:</th><td>${d.model || "-"}</td>
+        <th>Year Model:</th><td>${d.yearModel || d.yearBought || "-"}</td>
+      </tr>
+      <tr>
+        <th>Color:</th><td>${d.Color || d.color || "-"}</td>
+        <th>Fuel Type:</th><td>${d.FuelType || "-"}</td>
+      </tr>
+      <tr>
+        <th>Classification:</th><td>${d.Classification || "-"}</td>
+        <th>Vehicle Type:</th><td>${d.VehicleType || "-"}</td>
+      </tr>
+      <tr>
+        <th>Gross Weight:</th><td>${d.GrossWt || "-"}</td>
+        <th>Net Weight:</th><td>${d.NetWt || "-"}</td>
+      </tr>
+      <tr>
+        <th>Shipping Weight:</th><td>${d.ShippingWt || "-"}</td>
+        <th>Net Capacity:</th><td>${d.NetCapacity || "-"}</td>
+      </tr>
+      <tr>
+        <th>No. of Cylinders:</th><td>${d.NoofCylinders || "-"}</td>
+        <th>Piston Displacement:</th><td>${d.PistonDisplacement || "-"}</td>
+      </tr>
+      <tr>
+        <th>Engine No.:</th><td>${d.EngineNo || "-"}</td>
+        <th>Chassis No.:</th><td>${d.ChassisNo || "-"}</td>
+      </tr>
+      <tr>
+        <th>MV FILE NO.:</th><td>${d.MVFILENO || "-"}</td>
+         <th>LTO Client ID:</th><td>${d.LTOclientId || d.LTOClientID || "-"}</td>
+      </tr>
+      <tr>
+        <th>TIN:</th><td>${d.tin || "-"}</td>
+        <th>Account Number:</th><td>${d.AccountNumber || "-"}</td>
+      </tr>
+      <tr>
+        <th>AutoSweep No.:</th><td>${d.AutoSweep || "-"}</td>
+        <th>Easy Trip No.:</th><td>${d.EasyTrip || "-"}</td>
+      </tr>
+      <tr>
+      <th>OR No.:</th><td>${d.OR || "-"}</td>
+       <th>CR No.:</th><td>${d.CRNO || "-"}</td>
+      </tr>
+    </table>
+  `;
+}
 
   else if (activeTab === "Maintenance") {
     tab.innerHTML = `
@@ -369,8 +401,7 @@ function renderTab(v, d) {
         <button type="submit">Save</button>
       </form>
     `;
-  }
-
+  } 
   else if (activeTab === "Vehicle Request") {
     tab.innerHTML = `
       <form onsubmit="submitVehicleRequest(event)">
@@ -384,8 +415,7 @@ function renderTab(v, d) {
         <button type="submit">Save</button>
       </form>
     `;
-  }
-
+  } 
   else if (activeTab === "Whereabouts") {
     tab.innerHTML = `
       <form onsubmit="submitWhereabouts(event)">
@@ -400,8 +430,7 @@ function renderTab(v, d) {
         <button type="submit">Save</button>
       </form>
     `;
-  }
-
+  } 
   else if (activeTab === "Fuel") {
     tab.innerHTML = `
       <form onsubmit="submitFuel(event)">
@@ -418,17 +447,15 @@ function renderTab(v, d) {
         <button type="submit">Save</button>
       </form>
     `;
-  }
-
+  } 
   else if (activeTab === "Reports") {
     tab.innerHTML = `
       <form onsubmit="submitReport(event)">
-        <input type="file" name="report" required />
-        <button type="submit">📤 Upload Report</button>
-      </form>
+      <input type="file" name="report" required />
+      <button type="submit">📤 Upload Report</button>
+    </form>
     `;
-  }
-
+  } 
   else if (activeTab === "History") {
     renderHistory(v, tab);
   }
@@ -466,7 +493,7 @@ function renderHistory(v, tab) {
   tab.innerHTML = html;
 }
 
-// ------------------- CSV EXPORT -------------------
+// ------------------- CSV EXPORT PER TYPE -------------------
 function exportCSV(plate, type) {
   const v = vehicles.find(x => x.plate === plate);
   if (!v) return alert("Vehicle not found.");
@@ -486,13 +513,136 @@ function exportCSV(plate, type) {
   link.click();
 }
 
+// ------------------- TABLE HELPERS -------------------
+function generateHeaders(type) {
+  switch (type) {
+    case "Maintenance": return "<th>Date</th><th>CV No.</th><th>Reason / Description</th><th>Cost / Amount</th>";
+    case "Fuel": return "<th>Date</th><th>Bearer</th><th>PO #</th><th>Fuel Type</th><th>Amount</th><th>Job Order</th>";
+    case "Vehicle Request": return "<th>Date</th><th>Project</th><th>Job Order #</th><th>Location</th><th>Driver</th><th>Purpose</th><th>Requested By</th>";
+    case "Whereabouts": return "<th>Date</th><th>Place</th>";
+    case "Report": return "<th>Date</th><th>File</th>";
+    default: return "<th>Date</th><th>Details</th>";
+  }
+}
+
+function generateRow(type, r) {
+  let cells = "";
+  switch (type) {
+    case "Maintenance": cells = `<td>${r.date}</td><td>${r.cv}</td><td>${r.reason}</td><td>₱${r.cost}</td>`; break;
+    case "Fuel": cells = `<td>${r.date}</td><td>${r.bearer}</td><td>${r.order}</td><td>${r.gas}</td><td>₱${r.amount}</td><td>${r.jo}</td>`; break;
+    case "Vehicle Request": cells = `<td>${r.date}</td><td>${r.project}</td><td>${r.from}</td><td>${r.to}</td><td>${r.driver}</td><td>${r.purpose}</td><td>${r.request}</td>`; break;
+    case "Whereabouts": cells = `<td>${r.date}</td><td>${r.place}</td>`; break;
+    case "Report": cells = `<td>${r.date}</td><td>${r.file}</td>`; break;
+    default: cells = `<td>${r.date}</td><td>${JSON.stringify(r)}</td>`;
+  }
+  return `<tr>${cells}<td><button class='del-btn' onclick="deleteRecord('${r.index}')">🗑️</button></td></tr>`;
+}
+
+function deleteRecord(index) {
+  const v = vehicles.find(x => x.plate === selectedVehicle);
+  if (confirm("Are you sure you want to delete this record?")) {
+    v.history.splice(index, 1);
+    saveAndRefresh("History");
+  }
+}
+
+function toggleHistory(type) {
+  const section = document.getElementById(`history-${type}`);
+  if (!section) return;
+  const isVisible = section.style.display !== "none";
+  section.style.display = isVisible ? "none" : "block";
+  section.previousElementSibling.textContent = (isVisible ? "▶" : "▼") + " " + type;
+}
+
+// ------------------- FORMS -------------------
+function submitMaintenance(e) {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(e.target));
+  const v = vehicles.find(x => x.plate === selectedVehicle);
+  v.history.push({ type: "Maintenance", ...d });
+  saveAndRefresh("History");
+}
+
+function submitVehicleRequest(e) {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(e.target));
+  const v = vehicles.find(x => x.plate === selectedVehicle);
+  v.history.push({ type: "Vehicle Request", ...d });
+  saveAndRefresh("History");
+}
+
+function submitWhereabouts(e) {
+  e.preventDefault();
+  const f = new FormData(e.target);
+  const place = f.get("place") === "Company Use" ? `Company Use - ${f.get("company")}` : f.get("place");
+  const v = vehicles.find(x => x.plate === selectedVehicle);
+  v.whereabouts = place;
+  v.history.push({ type: "Whereabouts", date: new Date().toISOString().split("T")[0], place });
+  saveAndRefresh("Details");
+}
+
+function submitFuel(e) {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(e.target));
+  const v = vehicles.find(x => x.plate === selectedVehicle);
+  v.history.push({ type: "Fuel", ...d });
+  saveAndRefresh("History");
+}
+
+function submitReport(e) {
+  const fileInput = e.target.report.files[0];
+  if (!fileInput) return alert("Please select a file first.");
+
+  const fileURL = URL.createObjectURL(fileInput);
+  const v = vehicles.find(x => x.plate === selectedVehicle);
+
+  v.history.push({
+    type: "Report",
+    date: new Date().toISOString().split("T")[0],
+    fileName: fileInput.name,
+    fileURL: fileURL
+  });
+
+  saveAndRefresh("History");
+}
+
 // ------------------- HELPERS -------------------
-function backToList() { selectedVehicle = null; renderList(); }
-function setTab(tab) { activeTab = tab; renderDetails(); }
-function saveAndRefresh(tab) { saveData(); setTab(tab); }
+function backToList(){ selectedVehicle=null; renderList(); }
+function setTab(tab){ activeTab=tab; renderDetails(); }
+function saveAndRefresh(tab){ saveData(); setTab(tab); }
 
 // ------------------- INIT -------------------
 renderList();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
