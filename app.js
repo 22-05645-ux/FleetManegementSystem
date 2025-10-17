@@ -280,7 +280,6 @@ const vehicleImages = {
 };
 
 const app = document.getElementById("app");
-
 let selectedVehicle = null;
 let activeTab = "Details";
 
@@ -462,13 +461,6 @@ function renderTab(v, d) {
     renderHistory(v, tab);
   }
 }
-
-if (localStorage.getItem("userRole") !== "admin") {
-  const buttons = tab.querySelectorAll("button");
-  buttons.forEach(btn => btn.disabled = true);
-  tab.querySelectorAll("form input, form select").forEach(f => f.disabled = true);
-}
-
 
 // ------------------- HISTORY -------------------
 function renderHistory(v, tab) {
@@ -658,6 +650,7 @@ if (localStorage.getItem("loggedIn") === "true") {
 } else {
   renderLogin();
 }
+
 
 
 
