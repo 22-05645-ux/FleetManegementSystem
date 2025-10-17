@@ -433,8 +433,10 @@ function renderTab(v) {
         ${renderHistory(v, "Maintenance")}
         ${loggedInUser.role === "admin"
           ? `<form onsubmit="submitMaintenance(event)">
-              <input name="cv" placeholder="CV Number" required />
-              <input name="reason" placeholder="Description" required />
+              <input type="date" name="date" required />
+        <input type="text" name="cv" placeholder="CV Number" required />
+        <input type="text" name="reason" placeholder="Reason / Description" required />
+        <input type="number" name="cost" placeholder="Cost / Amount" required />
               <button type="submit">Add Maintenance</button>
             </form>` : `<p>Read-only access.</p>`}
       `;
@@ -446,8 +448,13 @@ function renderTab(v) {
         ${renderHistory(v, "Request")}
         ${loggedInUser.role === "admin"
           ? `<form onsubmit="submitRequest(event)">
-              <input name="purpose" placeholder="Purpose" required />
-              <input name="destination" placeholder="Destination" required />
+             <input type="date" name="date" required />
+        <input type="text" name="project" placeholder="Project" required />
+        <input type="text" name="from" placeholder="Job Order #" required />
+        <input type="text" name="to" placeholder="Location" required />
+        <input type="text" name="driver" placeholder="Driver" required />
+        <input type="text" name="purpose" placeholder="Purpose" required />
+        <input type="text" name="request" placeholder="Requested By" required />
               <button type="submit">Add Request</button>
             </form>` : `<p>Read-only access.</p>`}
       `;
@@ -459,8 +466,15 @@ function renderTab(v) {
         ${renderHistory(v, "Whereabouts")}
         ${loggedInUser.role === "admin"
           ? `<form onsubmit="submitWhereabouts(event)">
-              <input name="place" placeholder="Current Location" required />
-              <button type="submit">Update</button>
+              <select name="place" required>
+          <option value="">Select Location</option>
+          <option>Batangas City</option>
+          <option>Makati</option>
+          <option>Company Use</option>
+          <option>Repair Shop</option>
+        </select>
+        <input type="text" name="company" placeholder="If Company Use, specify destination" />
+        <button type="submit">Save</button>
             </form>` : `<p>Read-only access.</p>`}
       `;
       break;
@@ -471,8 +485,16 @@ function renderTab(v) {
         ${renderHistory(v, "Fuel")}
         ${loggedInUser.role === "admin"
           ? `<form onsubmit="submitFuel(event)">
-              <input name="liters" placeholder="Liters" type="number" required />
-              <input name="date" type="date" required />
+              <input type="date" name="date" required />
+        <input type="text" name="bearer" placeholder="Bearer" required />
+        <input type="text" name="order" placeholder="PO #" required />
+        <select name="gas" required>
+          <option value="">Select Fuel Type</option>
+          <option>Diesel</option>
+          <option>Gasoline</option>
+        </select>
+        <input type="number" name="amount" placeholder="Amount" required />
+        <input type="text" name="jo" placeholder="Job Order" required/>
               <button type="submit">Add Record</button>
             </form>` : `<p>Read-only access.</p>`}
       `;
@@ -484,8 +506,8 @@ function renderTab(v) {
         ${renderHistory(v, "Reports")}
         ${loggedInUser.role === "admin"
           ? `<form onsubmit="submitReport(event)">
-              <input name="report" placeholder="Report Summary" required />
-              <button type="submit">Submit Report</button>
+              <input type="file" name="report" required />
+      <button type="submit">📤 Upload Report</button>
             </form>` : `<p>Read-only access.</p>`}
       `;
       break;
@@ -708,6 +730,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
