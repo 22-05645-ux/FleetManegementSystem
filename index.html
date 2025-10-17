@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CISC Fleet Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo-container">
+      <img
+        src="https://media.licdn.com/dms/image/D560BAQGwtTvFVA5e_Q/company-logo_200_200/0/1697595933193?e=2147483647&v=beta&t=kOA11OZMk-StnPS_3-MpbicPzWtUTavPSMqPgvYGEuc"
+        class="logo"
+        alt="Company Logo"
+      />
+      <div class="title-container">
+        <h1 class="title">Fleet Management System</h1>
+        <p class="subtitle">Cifra Industrial Services Corporation</p>
+      </div>
+    </div>
+    <div id="clock" class="clock"></div>
+    <div class="user-info">
+      <span class="username">👤 <span id="userDisplay"></span></span>
+      <button class="change-pass-btn" onclick="renderChangePassword()">🔑 Change Password</button>
+      <button class="logout-btn" onclick="handleLogout()">🚪 Logout</button>
+    </div>
+  </header>
+
+  <main id="app" class="container"></main>
+
+  <footer class="footer">
+    <p>© Cifra Industrial Services Corporation</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
