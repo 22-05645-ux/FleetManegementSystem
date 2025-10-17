@@ -1,0 +1,527 @@
+/* BASE LAYOUT FIX — KEEP FOOTER AT BOTTOM */
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* BODY */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e9f5ee;
+  margin: 0;
+  padding: 0;
+}
+
+/* MAIN CONTENT FLEX */
+main {
+  flex: 1; /* pushes footer to bottom when content is short */
+}
+
+/* HEADER */
+.header {
+  background-color: #0b6623;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;      /* vertically align logo with text */
+  gap: 15px;                /* space between logo and text */
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+/* COMPANY NAME / TITLE beside logo */
+.logo-container h1 {
+  font-size: 28px;       /* ✅ larger text */
+  font-weight: 800;      /* bold and strong */
+  color: white;
+  margin: 0;
+  letter-spacing: 1px;   /* gives a professional look */
+  text-transform: uppercase;
+}
+
+.logo-container h2 {
+  font-size: 18px;       /* optional subtitle */
+  color: #e0ffe3;
+  margin: 0;
+  font-weight: 500;
+}
+
+.clock {
+  font-size: 30px;        
+  font-weight: bold;      
+  color: #FFFFFF;         
+  text-align: right;      
+  margin: 10px 20px;      
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* TITLE + SUBTITLE STACK */
+.title-container {
+  display: flex;
+  flex-direction: column;   /* ✅ subtitle below title */
+  line-height: 1.2;
+  justify-content: center;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #c9ffd1;           /* lighter green tint */
+  margin: 3px 0 0;
+  letter-spacing: 0.5px;
+}
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #0b6623;
+  color: white;
+  font-size: 14px;
+  margin-top: auto; /* ✅ Keeps footer at bottom */
+}
+
+/* VEHICLE GRID — fixed to 4x3 layout */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);  /* ✅ 4 columns per row */
+  grid-auto-rows: auto;
+  gap: 25px;
+  padding: 30px;
+  justify-items: center;  /* center cards horizontally */
+  align-items: start;     /* align cards neatly at the top */
+}
+
+/* 📱 Responsive design: adjust column count for smaller screens */
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for medium screens */
+  }
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr; /* 1 column for phones */
+  }
+}
+
+.card {
+  background: linear-gradient(180deg, #ffffff 0%, #f5fff7 100%);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+  max-width: 280px;        /* consistent width */
+  min-height: 280px;       /* uniform height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, #0b6623, #22c55e);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+.card img {
+  width: 90%;
+  height: 180px;
+  object-fit: contain;
+  margin-top: 15px;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+.card:hover img {
+  transform: scale(1.05);
+}
+.card h2 {
+  margin: 12px 0 4px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #064420;
+  letter-spacing: 1px;
+}
+
+.card p {
+  font-size: 15px;
+  color: #333;
+  margin: 0;
+  background: #e8f8ec;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+/* BACK BUTTON */
+.back-btn {
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 6px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.back-btn:hover {
+  background: #e2e8f0;
+}
+
+/* DETAILS PAGE */
+.details-container {
+  background: #f5fef8;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  max-width: 1000px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.details-image {
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto 20px;
+  border-radius: 8px;
+  display: block;
+}
+
+.tab-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tab-buttons button {
+  background: #e9ecef;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.tab-buttons button.active {
+  background: #1a7431;
+  color: white;
+}
+
+.tab-buttons button:hover {
+  background: #228b22;
+  color: white;
+}
+
+#tabContent form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+#tabContent input,
+#tabContent select {
+  padding: 8px 10px;
+  border: 1px solid #8fd19e;
+  border-radius: 5px;
+}
+
+#tabContent button {
+  background: #1a7431;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 140px;
+  margin: 10px auto 0;
+}
+
+#tabContent button:hover {
+  background: #145c2b;
+}
+
+/* HISTORY TABLE SECTIONS */
+.history-section {
+  margin-top: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.history-header {
+  background-color: #1a7431;
+  color: white;
+  font-weight: bold;
+  padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease;
+}
+
+.history-header:hover {
+  background-color: #145e26;
+}
+
+.history-body {
+  display: block;
+  background-color: #f8fff8;
+}
+
+.history-group-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.history-group-table th,
+.history-group-table td {
+  border: 1px solid #c8e6c9;
+  padding: 6px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.history-group-table th {
+  background-color: #d1f0d1;
+  color: #000;
+  font-weight: 600;
+}
+
+/* EXPORT BUTTON */
+.export-btn {
+  background: #1a7431;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.export-btn:hover {
+  background: #145e26;
+}
+
+/* DELETE BUTTON */
+.del-btn {
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  background: transparent;
+  margin: 0 4px;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+.del-btn:hover {
+  background: #fff5f5;
+  color: #a11;
+}
+
+/* VEHICLE DETAILS TABLE (2-COLUMN RESPONSIVE) */
+.details-table {
+  width: 100%;
+  max-width: 850px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.details-table th,
+.details-table td {
+  border: 1px solid #c8e6c9;
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.details-table th {
+  background-color: #1a7431;
+  color: white;
+  width: 20%;
+  font-weight: 600;
+  text-align: center;
+}
+
+.details-table td {
+  background-color: #f8fff8;
+  color: #000;
+  width: 30%;
+}
+
+/* 📱 RESPONSIVE DESIGN — switch to one column on smaller screens */
+@media (max-width: 700px) {
+  .details-table,
+  .details-table tr,
+  .details-table th,
+  .details-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .details-table tr {
+    margin-bottom: 10px;
+  }
+
+  .details-table th {
+    background: #05f041;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .details-table td {
+    background: #f8fff8;
+    border-radius: 0 0 6px 6px;
+    padding: 8px 12px;
+    border-top: none;
+  }
+
+  .details-table tr:nth-child(odd) th {
+    background: #145e26; /* alternate green for readability */
+  }
+}
+
+.card:hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* LOGIN PAGE STYLING */
+.login-container {
+  background: #f5fff8;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  width: 350px;
+  max-width: 90%;
+  margin: 120px auto;
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.login-container h2 {
+  color: #0b6623;
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.login-subtitle {
+  color: #1a7431;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #8fd19e;
+}
+
+.login-container button {
+  background: #1a7431;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.login-container button:hover {
+  background: #145e26;
+}
+
+.login-note {
+  font-size: 13px;
+  color: #666;
+  margin-top: 10px;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+.logout-btn:hover {
+  background: #d32f2f;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.username {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+
+
+
+
+
+
+
+
+
+
