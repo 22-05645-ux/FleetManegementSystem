@@ -482,8 +482,6 @@ function renderTab(v) {
 
     case "Maintenance":
       content.innerHTML = `
-        <h3>Maintenance Records</h3>
-        ${renderHistory(v, "Maintenance")}
         ${loggedInUser.role === "admin"
           ? `<form onsubmit="submitMaintenance(event)">
               <input type="date" name="date" required />
@@ -497,8 +495,6 @@ function renderTab(v) {
 
     case "Vehicle Request":
       content.innerHTML = `
-        <h3>Vehicle Requests</h3>
-        ${renderHistory(v, "Request")}
         ${loggedInUser.role === "admin"
           ? `<form onsubmit="submitRequest(event)">
              <input type="date" name="date" required />
@@ -515,8 +511,6 @@ function renderTab(v) {
 
     case "Whereabouts":
       content.innerHTML = `
-        <h3>Whereabouts</h3>
-        ${renderHistory(v, "Whereabouts")}
         ${loggedInUser.role === "admin"
           ? `<form onsubmit="submitWhereabouts(event)">
               <select name="place" required>
@@ -534,8 +528,6 @@ function renderTab(v) {
 
     case "Fuel":
       content.innerHTML = `
-        <h3>Fuel Logs</h3>
-        ${renderHistory(v, "Fuel")}
         ${loggedInUser.role === "admin"
           ? `<form onsubmit="submitFuel(event)">
               <input type="date" name="date" required />
@@ -555,8 +547,6 @@ function renderTab(v) {
 
     case "Reports":
       content.innerHTML = `
-        <h3>Reports</h3>
-        ${renderHistory(v, "Reports")}
         ${loggedInUser.role === "admin"
           ? `<form onsubmit="submitReport(event)">
               <input type="file" name="report" required />
@@ -938,6 +928,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
