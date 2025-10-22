@@ -38,7 +38,7 @@ const vehicleImages = {
   "UOF 225": "https://www.isuzu-gencars.com.ph/wp-content/uploads/2020/07/Isuzu-TRAVIZ-Utility-Van-222-scaled.jpg",
   "NQX 657": "https://isuzuintecogroup.com/wp-content/uploads/2022/12/4x4-lsa-redspinel.png",
   "WQT 225": "https://alpinemotors.com.ph/wp-content/uploads/2021/05/L300.png",
-  "MAM 7806": "https://carused.jp/images/elf/flatbody.jpg",
+  "MAM 7806": "elf-removebg-preview.png",
   "NBO 6586": "https://www.isuzu-gencars.com.ph/wp-content/uploads/2020/07/Isuzu-TRAVIZ-Utility-Van-222-scaled.jpg"
 };
 
@@ -929,6 +929,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
