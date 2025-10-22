@@ -719,7 +719,7 @@ function submitRequest(e) {
     project: f.get("project"),
     from: f.get("from"),
     to: f.get("to"),
-    driver: g.get("driver"),
+    driver: f.get("driver"),
     purpose: f.get("purpose"), 
     request: f.get("request") });
   saveAndRefresh("Vehicle Request");
@@ -903,4 +903,5 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
