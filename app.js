@@ -592,6 +592,7 @@ function renderFullHistory(v) {
 
   const grouped = {};
   v.history.forEach((item, i) => {
+    if (item.type === "Request") item.type = "Vehicle Request";
     if (!grouped[item.type]) grouped[item.type] = [];
     grouped[item.type].push({ ...item, index: i });
   });
@@ -910,6 +911,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
