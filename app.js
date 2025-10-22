@@ -658,7 +658,14 @@ function generateRow(type, r) {
       cells = `<td>${r.date}</td><td>${r.bearer || "-"}</td><td>${r.order || "-"}</td><td>${r.gas || "-"}</td><td>₱${r.amount || "-"}</td><td>${r.jo || "-"}</td>`;
       break;
     case "Vehicle Request":
-      cells = `<td>${r.date}</td><td>${r.project || "-"}</td><td>${r.from || "-"}</td><td>${r.to || "-"}</td><td>${r.driver || "-"}</td><td>${r.purpose || "-"}</td><td>${r.request || "-"}</td>`;
+      cells = `
+      <td>${r.date}</td>
+      <td>${r.project || "-"}</td>
+      <td>${r.from || "-"}</td>
+      <td>${r.to || "-"}</td>
+      <td>${r.driver || "-"}</td>
+      <td>${r.purpose || "-"}</td>
+      <td>${r.request || "-"}</td>`;
       break;
     case "Whereabouts":
       cells = `<td>${r.date}</td><td>${r.place || "-"}</td>`;
@@ -903,5 +910,6 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
