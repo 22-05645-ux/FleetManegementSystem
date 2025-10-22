@@ -425,6 +425,11 @@ function renderTab(v) {
 
   switch (activeTab) {
     case "Details":
+      const d = details[selectedVehicle];
+  if (!d) {
+    content.innerHTML = "<p>No vehicle details available.</p>";
+    return;
+  }
       content.innerHTML = `
         <table class="details-table">
           <tr>
@@ -912,6 +917,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
