@@ -701,6 +701,11 @@ function generateRow(type, r) {
     default:
       cells = `<td>${r.date}</td><td>${JSON.stringify(r)}</td>`;
   }
+  const deleteButton =
+    loggedInUser && loggedInUser.role === "admin"
+      ? `<button class='del-btn' onclick="deleteRecord('${r.index}')">🗑️</button>`
+      : `<button class='del-btn' disabled title="Only admin can delete" style="opacity:0.4; cursor:not-allowed;">🗑️</button>`;
+
   return `<tr>${cells}<td><button class='del-btn' onclick="deleteRecord('${r.index}')">🗑️</button></td></tr>`;
 }
 
@@ -932,6 +937,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
