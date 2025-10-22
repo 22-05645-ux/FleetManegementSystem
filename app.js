@@ -699,8 +699,13 @@ function submitMaintenance(e) {
   e.preventDefault();
   const f = new FormData(e.target);
   const v = vehicles.find(x => x.plate === selectedVehicle);
-  v.history.push({ type: "Maintenance", date: new Date().toISOString().split("T")[0],
-                   cv: f.get("cv"), reason: f.get("reason") });
+  v.history.push({ 
+    type: "Maintenance", 
+    date: new Date().toISOString().split("T")[0],
+    cv: f.get("cv"), 
+    reason: f.get("reason"),
+    cost: f.get("cost")
+  });
   saveAndRefresh("Maintenance");
 }
 
@@ -708,8 +713,15 @@ function submitRequest(e) {
   e.preventDefault();
   const f = new FormData(e.target);
   const v = vehicles.find(x => x.plate === selectedVehicle);
-  v.history.push({ type: "Request", date: new Date().toISOString().split("T")[0],
-                   purpose: f.get("purpose"), destination: f.get("destination") });
+  v.history.push({ 
+    type: "Request", 
+    date: new Date().toISOString().split("T")[0],
+    project: f.get("project"),
+    from: f.get("from"),
+    to: f.get("to"),
+    driver: g.get("driver"),
+    purpose: f.get("purpose"), 
+    request: f.get("request") });
   saveAndRefresh("Vehicle Request");
 }
 
@@ -727,7 +739,15 @@ function submitFuel(e) {
   e.preventDefault();
   const f = new FormData(e.target);
   const v = vehicles.find(x => x.plate === selectedVehicle);
-  v.history.push({ type: "Fuel", date: f.get("date"), liters: f.get("liters") + " L" });
+  v.history.push({ 
+    type: "Fuel", 
+    date: f.get("date"), 
+    bearer: f.get("bearer"),
+    order: f.get("order"),
+    gas: f.get("gas"),
+    amount: f.get("amount"),
+    jo: f.get("jo")
+  });
   saveAndRefresh("Fuel");
 }
 
@@ -883,3 +903,4 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
