@@ -706,8 +706,9 @@ function generateRow(type, r) {
       ? `<button class='del-btn' onclick="deleteRecord('${r.index}')">🗑️</button>`
       : `<button class='del-btn' disabled title="Only admin can delete" style="opacity:0.4; cursor:not-allowed;">🗑️</button>`;
 
-  return `<tr>${cells}<td><button class='del-btn' onclick="deleteRecord('${r.index}')">🗑️</button></td></tr>`;
+    return `<tr>${cells}<td>${deleteButton}</td></tr>`;
 }
+
 
 function deleteRecord(index) {
   const v = vehicles.find(x => x.plate === selectedVehicle);
@@ -937,6 +938,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
