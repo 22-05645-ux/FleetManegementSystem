@@ -41,8 +41,8 @@ const vehicleImages = {
   "NBO 6586": "https://www.isuzu-gencars.com.ph/wp-content/uploads/2020/07/Isuzu-TRAVIZ-Utility-Van-222-scaled.jpg"
 };
 
-const details = {
-   "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB", 
+// sample vehicle details (unchanged)
+const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB", 
               yearModel: "2013", 
               Color: "Polar White", 
               FuelType: "Diesel", 
@@ -101,6 +101,60 @@ const details = {
                NetWt: "", 
                ShippingWt: "", 
                NetCapacity: "", 
+               EngineNo:"", 
+               MVFILENO:"", 
+               CRNO: "", 
+               PistonDisplacement: "", 
+               NoofCylinders: "", 
+               ChassisNo:"", 
+               LTOclientId:"", 
+               tin: "",
+               AccountNumber:"2388347",
+               AutoSweep: "F883794",
+               EasyTrip: "5400-0023-1590",
+              },
+  "NFZ 2848": { model: "ISUZU Traviz", 
+               yearModel: "", 
+               color: "White", 
+               FuelType: "", 
+               Classification:"", 
+               VehicleType: "", 
+               Aircon: "", 
+               GrossWt:"", 
+               NetWt: "", 
+               ShippingWt: "", 
+               NetCapacity: "", 
+               EngineNo:"", 
+               MVFILENO:"", 
+               CRNO: "", 
+               PistonDisplacement: "", 
+               NoofCylinders: "", 
+               ChassisNo:"", 
+               LTOclientId:"", 
+               tin: "",
+               AccountNumber:"782793",
+               AutoSweep: "R333835",
+               EasyTrip: "",
+              },
+  "CBP 5511": { model: "ISUZU Rebuilt PWRGATE DROPSIDE W/ PTG TRUCK", 
+               yearModel: "2021", 
+               color: "White", 
+               FuelType: "Diesel", 
+               Classification:"Private", 
+               VehicleType: "Utility Vehicle UV DIE", 
+               Aircon: "", 
+               GrossWt:"4200", 
+               NetWt: "2100", 
+               ShippingWt: "2100", 
+               NetCapacity: "2100", 
+               EngineNo:"4HF1-665568", 
+               MVFILENO:"0389-00000024137", 
+               CRNO: "42203501-4 / 438854194", 
+               PistonDisplacement: "4334", 
+               NoofCylinders: "4", 
+               ChassisNo:"NKR66E-7544106", 
+               LTOclientId:"", 
+               tin: "",
                AccountNumber:"2402191",
                AutoSweep: "F897407",
                EasyTrip: "",
@@ -237,7 +291,7 @@ const details = {
                AutoSweep: "R415774",
                EasyTrip: "5200-2566-4138",
               },
-};
+                };
 
 // ------------------- VARIABLES -------------------
 const app = document.getElementById("app");
@@ -329,11 +383,6 @@ function renderList() {
 }
 
 // ===========================================================
-// === PART 2 CONTAINS VEHICLE DETAILS, TABS, CHANGE PASSWORD,
-// === USER MANAGEMENT, AND HELPER FUNCTIONS
-// ===========================================================
-
-// ===========================================================
 // === VEHICLE DETAILS SECTION ===
 // ===========================================================
 
@@ -358,18 +407,16 @@ function renderDetails() {
       <img src="${imgUrl}" class="details-image" alt="${v.plate}" />
       <div class="tab-buttons">
         ${["Details","Maintenance","Vehicle Request","Whereabouts","Fuel","Reports","History"]
-          .map(tab => `<button onclick="setTab('${tab}')" class="${activeTab===tab?'active':''}">${tab}</button>`)
-          .join("")}
+          .map(tab => `<button onclick="setTab('${tab}')" class="${activeTab===tab?'active':''}">${tab}</button>`).join("")}
       </div>
       <div id="tabContent"></div>
     </div>
   `;
-
   renderTab(v);
 }
 
 // ===========================================================
-// === VEHICLE TAB CONTENT RENDERING ===
+// === TAB RENDERING ===
 // ===========================================================
 
 function renderTab(v) {
@@ -523,9 +570,8 @@ function renderTab(v) {
 }
 
 // ===========================================================
-// === HISTORY RENDERING ===
+// === SIMPLE HISTORY (for other tabs) ===
 // ===========================================================
-
 function renderHistory(v, type) {
   const filtered = (v.history || []).filter(h => h.type === type);
   if (filtered.length === 0) return `<p>No ${type} records found.</p>`;
@@ -538,17 +584,113 @@ function renderHistory(v, type) {
   `;
 }
 
+// ===========================================================
+// === ADVANCED FULL HISTORY (GROUPED + EXPORTABLE) ===
+// ===========================================================
 function renderFullHistory(v) {
-  if (!v.history || v.history.length === 0) return `<p>No history available.</p>`;
-  return `
-    <ul>
-      ${v.history.map(h =>
-        `<li><strong>${h.type}</strong> – ${h.date} – ${h.details || h.reason || h.place || h.report || ""}</li>`
-      ).join("")}
-    </ul>
-  `;
+  if (!v.history || !v.history.length) return `<p>No history yet.</p>`;
+
+  const grouped = {};
+  v.history.forEach((item, i) => {
+    if (!grouped[item.type]) grouped[item.type] = [];
+    grouped[item.type].push({ ...item, index: i });
+  });
+
+  let html = "";
+  const types = Object.entries(grouped);
+  types.forEach(([type, records], idx) => {
+    const initiallyHidden = idx === 0 ? "" : `style="display:none;"`;
+    const arrow = idx === 0 ? "▼" : "▶";
+    html += `
+      <div class="history-section">
+        <div class="history-header" onclick="toggleHistory('${type}')">${arrow} ${type}</div>
+        <div class="history-body" id="history-${type}" ${initiallyHidden}>
+          <button class="export-btn" onclick="exportCSV('${v.plate}', '${type}')">📥 Export ${type} CSV</button>
+          <table class="history-group-table">
+            <thead><tr>${generateHeaders(type)}<th>Actions</th></tr></thead>
+            <tbody>${records.map(r => generateRow(type, r)).join("")}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  });
+  return html;
 }
 
+function exportCSV(plate, type) {
+  const v = vehicles.find(x => x.plate === plate);
+  if (!v) return alert("Vehicle not found.");
+  const filtered = v.history.filter(h => h.type === type);
+  if (!filtered.length) return alert(`No ${type} records to export.`);
+
+  const keys = Array.from(new Set(filtered.flatMap(Object.keys)));
+  const rows = [keys.join(",")];
+  filtered.forEach(entry => {
+    const row = keys.map(k => `"${(entry[k] ?? "").toString().replace(/"/g, '""')}"`);
+    rows.push(row.join(","));
+  });
+  const dateStr = new Date().toISOString().split("T")[0];
+  const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `${plate}_${type}_${dateStr}.csv`;
+  link.click();
+}
+
+function generateHeaders(type) {
+  switch (type) {
+    case "Maintenance": return "<th>Date</th><th>CV No.</th><th>Reason / Description</th><th>Cost / Amount</th>";
+    case "Fuel": return "<th>Date</th><th>Bearer</th><th>PO #</th><th>Fuel Type</th><th>Amount</th><th>Job Order</th>";
+    case "Vehicle Request": return "<th>Date</th><th>Project</th><th>Job Order #</th><th>Location</th><th>Driver</th><th>Purpose</th><th>Requested By</th>";
+    case "Whereabouts": return "<th>Date</th><th>Place</th>";
+    case "Report": return "<th>Date</th><th>File</th>";
+    default: return "<th>Date</th><th>Details</th>";
+  }
+}
+
+function generateRow(type, r) {
+  let cells = "";
+  switch (type) {
+    case "Maintenance":
+      cells = `<td>${r.date}</td><td>${r.cv || "-"}</td><td>${r.reason || "-"}</td><td>₱${r.cost || "-"}</td>`;
+      break;
+    case "Fuel":
+      cells = `<td>${r.date}</td><td>${r.bearer || "-"}</td><td>${r.order || "-"}</td><td>${r.gas || "-"}</td><td>₱${r.amount || "-"}</td><td>${r.jo || "-"}</td>`;
+      break;
+    case "Vehicle Request":
+      cells = `<td>${r.date}</td><td>${r.project || "-"}</td><td>${r.from || "-"}</td><td>${r.to || "-"}</td><td>${r.driver || "-"}</td><td>${r.purpose || "-"}</td><td>${r.request || "-"}</td>`;
+      break;
+    case "Whereabouts":
+      cells = `<td>${r.date}</td><td>${r.place || "-"}</td>`;
+      break;
+    case "Report":
+      cells = `<td>${r.date}</td>
+               <td><a href="${r.fileURL}" download="${r.fileName}" target="_blank"
+               style="color:#1a7431; text-decoration:none; font-weight:bold;">
+               ⬇️ ${r.fileName || "Download Report"}</a></td>`;
+      break;
+    default:
+      cells = `<td>${r.date}</td><td>${JSON.stringify(r)}</td>`;
+  }
+  return `<tr>${cells}<td><button class='del-btn' onclick="deleteRecord('${r.index}')">🗑️</button></td></tr>`;
+}
+
+function deleteRecord(index) {
+  const v = vehicles.find(x => x.plate === selectedVehicle);
+  if (!v) return alert("Vehicle not found.");
+  if (confirm("Are you sure you want to delete this record?")) {
+    v.history.splice(index, 1);
+    saveAndRefresh("History");
+  }
+}
+
+function toggleHistory(type) {
+  const section = document.getElementById(`history-${type}`);
+  if (!section) return;
+  const isVisible = section.style.display !== "none";
+  section.style.display = isVisible ? "none" : "block";
+  section.previousElementSibling.textContent = (isVisible ? "▶" : "▼") + " " + type;
+}
 // ===========================================================
 // === VEHICLE FORMS (ADMIN ONLY) ===
 // ===========================================================
@@ -734,14 +876,10 @@ function backToList() { selectedVehicle = null; renderList(); }
 function setTab(tab) { activeTab = tab; renderDetails(); }
 
 // ===========================================================
-// === INITIALIZE APP ===
+// === FORMS, PASSWORD, USER MANAGEMENT, HELPERS (unchanged) ===
 // ===========================================================
+// keep your original submitMaintenance, submitFuel, submitReport, etc.
+// and the rest of your user management / helper functions unchanged.
 
 if (loggedInUser) renderList();
 else renderLogin();
-
-
-
-
-
-
