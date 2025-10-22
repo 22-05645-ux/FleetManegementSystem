@@ -606,6 +606,7 @@ function renderFullHistory(v) {
   let html = "";
   const types = Object.entries(grouped);
   types.forEach(([type, records], idx) => {
+    records.sort((a, b) => new Date(b.date) - new Date(a.date));
     const initiallyHidden = idx === 0 ? "" : `style="display:none;"`;
     const arrow = idx === 0 ? "▼" : "▶";
 
@@ -931,6 +932,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
