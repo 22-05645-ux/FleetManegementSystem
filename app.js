@@ -602,12 +602,21 @@ function renderFullHistory(v) {
     if (!grouped[item.type]) grouped[item.type] = [];
     grouped[item.type].push({ ...item, index: i });
   });
-
+  
   let html = "";
   const types = Object.entries(grouped);
   types.forEach(([type, records], idx) => {
     const initiallyHidden = idx === 0 ? "" : `style="display:none;"`;
     const arrow = idx === 0 ? "▼" : "▶";
+
+    // 🧮 compute total for types that have cost or amount fields
+    let total = 0;
+    if (type === "Maintenance") {
+      total = records.reduce((sum, r) => sum + (parseFloat(r.cost) || 0), 0);
+    } else if (type === "Fuel") {
+      total = records.reduce((sum, r) => sum + (parseFloat(r.amount) || 0), 0);
+    }
+    
     html += `
       <div class="history-section">
         <div class="history-header" onclick="toggleHistory('${type}')">${arrow} ${type}</div>
@@ -617,6 +626,11 @@ function renderFullHistory(v) {
             <thead><tr>${generateHeaders(type)}<th>Actions</th></tr></thead>
             <tbody>${records.map(r => generateRow(type, r)).join("")}</tbody>
           </table>
+          ${
+            total > 0
+              ? `<div class="total-row">💰 <strong>Total Amount:</strong> ₱${total.toLocaleString()}</div>`
+              : ""
+          }
         </div>
       </div>
     `;
@@ -917,6 +931,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
