@@ -582,6 +582,10 @@ input[disabled], select[disabled], button[disabled] {
   font-size: 15px;
 }
 
+.del-btn[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 
 
 
