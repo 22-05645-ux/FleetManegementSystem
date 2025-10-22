@@ -572,6 +572,15 @@ input[disabled], select[disabled], button[disabled] {
   background: #dc2626;
 }
 
+.total-row {
+  background: #e7f9e7;
+  color: #064420;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-top: 2px solid #c8e6c9;
+  text-align: right;
+  font-size: 15px;
+}
 
 
 
