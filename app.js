@@ -6,7 +6,7 @@
 // ------------------- USER DATA -------------------
 let users = JSON.parse(localStorage.getItem("users")) || [
   { username: "admin", password: "admin123", role: "admin" },
-  { username: "cifra", password: "cisc123", role: "admin" },
+  { username: "Cifra Batangas", password: "cisc123", role: "admin" },
   { username: "user", password: "user123", role: "user" }
 ];
 localStorage.setItem("users", JSON.stringify(users));
@@ -929,6 +929,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
