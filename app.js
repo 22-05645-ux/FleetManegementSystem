@@ -1,5 +1,5 @@
 // ===========================================================
-// === CISC FLEET MANAGEMENT SYSTEM - APP.JS (PART 1/2) ===
+// === CISC FLEET MANAGEMENT SYSTEM ===
 // ===========================================================
 // Includes: Initialization, Login, Role Handling, Dashboard, Vehicle Grid
 
@@ -48,8 +48,7 @@ const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB",
               Color: "Polar White", 
               FuelType: "Diesel", 
               Classification:"Private-(PVT)", 
-              VehicleType: "Utility Vehicle FB", 
-              Aircon: "Non-Aircon", 
+              VehicleType: "Utility Vehicle FB",  
               GrossWt:"3200", 
               NetWt: "1600", 
               ShippingWt: "1600", 
@@ -63,8 +62,8 @@ const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB",
               LTOclientId:"C-22-0070546", 
               tin: "000-003-934-488", 
               AccountNumber:"558267",
-               AutoSweep: "R178408",
-               EasyTrip: "5200-1890-1081",
+              AutoSweep: "R178408",
+              EasyTrip: "5200-1890-1081",
               OR:"1368-000000116000",
              },
   "NGX 4853": { model: "Mitsubishi L300", 
@@ -72,8 +71,7 @@ const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB",
                color: "White", 
                FuelType: "", 
                Classification:"", 
-               VehicleType: "", 
-               Aircon: "", 
+               VehicleType: "",  
                GrossWt:"", 
                NetWt: "", 
                ShippingWt: "", 
@@ -96,8 +94,7 @@ const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB",
                color: "White", 
                FuelType: "", 
                Classification:"", 
-               VehicleType: "", 
-               Aircon: "", 
+               VehicleType: "",  
                GrossWt:"", 
                NetWt: "", 
                ShippingWt: "", 
@@ -119,8 +116,7 @@ const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB",
                color: "White", 
                FuelType: "", 
                Classification:"", 
-               VehicleType: "", 
-               Aircon: "", 
+               VehicleType: "",  
                GrossWt:"", 
                NetWt: "", 
                ShippingWt: "", 
@@ -142,8 +138,7 @@ const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB",
                color: "White", 
                FuelType: "Diesel", 
                Classification:"Private", 
-               VehicleType: "Utility Vehicle UV DIE", 
-               Aircon: "", 
+               VehicleType: "Utility Vehicle UV DIE",  
                GrossWt:"4200", 
                NetWt: "2100", 
                ShippingWt: "2100", 
@@ -166,8 +161,7 @@ const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB",
                color: "White", 
                FuelType: "Diesel", 
                Classification:"Private", 
-               VehicleType: "Utility Vehicle|UV|DIE", 
-               Aircon: "", 
+               VehicleType: "Utility Vehicle|UV|DIE",  
                GrossWt:"4200", 
                NetWt: "2100", 
                ShippingWt: "2100", 
@@ -190,8 +184,7 @@ const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB",
               color: "White", 
               FuelType: "", 
               Classification:"", 
-              VehicleType: "", 
-              Aircon: "", 
+              VehicleType: "",  
               GrossWt:"", 
               NetWt: "", 
               ShippingWt: "", 
@@ -205,16 +198,15 @@ const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB",
               LTOclientId:"", 
               tin: "",
               AccountNumber:"780819",
-               AutoSweep: "R331861",
-               EasyTrip: "5200-1506-1167",
+              AutoSweep: "R331861",
+              EasyTrip: "5200-1506-1167",
              },
   "UOF 225": { model: "ISUZU SOBIDA", 
               yearModel: "", 
               color: "GREEN", 
               FuelType: "", 
               Classification:"", 
-              VehicleType: "", 
-              Aircon: "", 
+              VehicleType: "",  
               GrossWt:"", 
               NetWt: "", 
               ShippingWt: "", 
@@ -228,16 +220,15 @@ const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB",
               LTOclientId:"",
               tin: "", 
               AccountNumber:"1247218",
-               AutoSweep: "R761904",
-               EasyTrip: "5200-1893-0261",
+              AutoSweep: "R761904",
+              EasyTrip: "5200-1893-0261",
              },
   "NQX 657": { model: "ISUZU D-MAX", 
               yearModel: "2010", 
               color: "Canyon Red", 
               FuelType: "Diesel", 
               Classification:"Private-(PVT)",
-              VehicleType: "Utility Vehicle Double Cab", 
-              Aircon: "R134a", 
+              VehicleType: "Utility Vehicle Double Cab",  
               GrossWt:"2650", 
               NetWt: "", 
               ShippingWt: "",
@@ -260,8 +251,7 @@ const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB",
                color: "GREEN", 
                FuelType: "",
                Classification:"", 
-               VehicleType: "", 
-               Aircon: "", 
+               VehicleType: "",  
                GrossWt:"", 
                NetWt: "", 
                ShippingWt: "", 
@@ -287,10 +277,21 @@ const details = { "WQT 225": { model: "Mitsubishi L300 Exceed 2.5 FB",
                FuelType: "Diesel",
                Classification:"Private-(PVT)", 
                VehicleType: "Utility Vehicle PASSENGER VAN", 
-               Aircon: "Non-Aircon", 
                AccountNumber:"884984",
                AutoSweep: "R415774",
                EasyTrip: "5200-2566-4138",
+               GrossWt:"", 
+               NetWt: "", 
+               ShippingWt: "", 
+               NetCapacity: "", 
+               EngineNo:"",
+               MVFILENO:"", 
+               CRNO: "",
+               PistonDisplacement: "", 
+               NoofCylinders: "", 
+               ChassisNo:"",  
+               tin: "", 
+               OR: "",
               },
                 };
 
@@ -320,7 +321,6 @@ function renderLogin() {
         <input type="password" id="password" placeholder="Password" required />
         <button type="submit">Login</button>
       </form>
-      <p class="hint">Admin: admin123 | User: user123</p>
     </div>
   `;
 }
@@ -430,7 +430,7 @@ function renderTab(v) {
   if (!d) {
     content.innerHTML = "<p>No vehicle details available.</p>";
     return;
-  }
+  }                                           
       content.innerHTML = `
         <table class="details-table">
           <tr>
@@ -665,10 +665,20 @@ function generateRow(type, r) {
   let cells = "";
   switch (type) {
     case "Maintenance":
-      cells = `<td>${r.date}</td><td>${r.cv || "-"}</td><td>${r.reason || "-"}</td><td>₱${r.cost || "-"}</td>`;
+      cells = `
+      <td>${r.date}</td>
+      <td>${r.cv || "-"}</td>
+      <td>${r.reason || "-"}</td>
+      <td>₱${r.cost || "-"}</td>`;
       break;
     case "Fuel":
-      cells = `<td>${r.date}</td><td>${r.bearer || "-"}</td><td>${r.order || "-"}</td><td>${r.gas || "-"}</td><td>₱${r.amount || "-"}</td><td>${r.jo || "-"}</td>`;
+      cells = `
+      <td>${r.date}</td>
+      <td>${r.bearer || "-"}</td>
+      <td>${r.order || "-"}</td>
+      <td>${r.gas || "-"}</td>
+      <td>₱${r.amount || "-"}</td>
+      <td>${r.jo || "-"}</td>`;
       break;
     case "Vehicle Request":
       cells = `
@@ -681,7 +691,9 @@ function generateRow(type, r) {
       <td>${r.request || "-"}</td>`;
       break;
     case "Whereabouts":
-      cells = `<td>${r.date}</td><td>${r.place || "-"}</td>`;
+      cells = `
+      <td>${r.date}</td>
+      <td>${r.place || "-"}</td>`;
       break;
     case "Report":
       cells = `<td>${r.date}</td>
@@ -920,12 +932,6 @@ function saveAndRefresh(tab) {
 
 function backToList() { selectedVehicle = null; renderList(); }
 function setTab(tab) { activeTab = tab; renderDetails(); }
-
-// ===========================================================
-// === FORMS, PASSWORD, USER MANAGEMENT, HELPERS (unchanged) ===
-// ===========================================================
-// keep your original submitMaintenance, submitFuel, submitReport, etc.
-// and the rest of your user management / helper functions unchanged.
 
 if (loggedInUser) renderList();
 else renderLogin();
