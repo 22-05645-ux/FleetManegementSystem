@@ -485,12 +485,13 @@ function renderTab(v) {
       content.innerHTML = `
         ${loggedInUser.role === "admin"
           ? `<form onsubmit="submitMaintenance(event)">
-              <input type="date" name="date" required />
-        <input type="text" name="cv" placeholder="CV Number" required />
-        <input type="text" name="reason" placeholder="Reason / Description" required />
-        <input type="number" name="cost" placeholder="Cost / Amount" required />
-              <button type="submit">Add Maintenance</button>
-            </form>` : `<p>Read-only access.</p>`}
+  <input type="date" name="date" required />
+  <input type="text" name="cv" placeholder="CV Number" required />
+  <input type="text" name="reason" placeholder="Reason / Description" required />
+  <input type="number" name="cost" placeholder="Cost / Amount" required />
+  <input type="file" name="report" accept=".pdf,.jpg,.png,.doc,.docx,.xls,.xlsx" />
+  <button type="submit">Add Maintenance</button>
+</form>` : `<p>Read-only access.</p>`}
       `;
       break;
 
@@ -547,14 +548,8 @@ function renderTab(v) {
       break;
 
     case "Reports":
-      content.innerHTML = `
-        ${loggedInUser.role === "admin"
-          ? `<form onsubmit="submitReport(event)">
-              <input type="file" name="report" required />
-      <button type="submit">📤 Upload Report</button>
-            </form>` : `<p>Read-only access.</p>`}
-      `;
-      break;
+  content.innerHTML = `<p></p>`;
+  break;
 
     case "History":
       content.innerHTML = `
@@ -737,26 +732,21 @@ function submitMaintenance(e) {
   e.preventDefault();
   const f = new FormData(e.target);
   const v = vehicles.find(x => x.plate === selectedVehicle);
-  v.history.push({ 
+ const record = { 
     type: "Maintenance", 
-    date: new Date().toISOString().split("T")[0],
+    date: f.get("date") || new Date().toISOString().split("T")[0],
     cv: f.get("cv"), 
     reason: f.get("reason"),
     cost: f.get("cost")
-  });
+  };
   const fileInput = e.target.report.files[0];
-  if (!fileInput) return alert("Please select a file first.");
+  if (fileInput) {
+    const fileURL = URL.createObjectURL(fileInput);
+    record.fileName = fileInput.name;
+    record.fileURL = fileURL;
+  }
 
-  const fileURL = URL.createObjectURL(fileInput);
-  const v = vehicles.find(x => x.plate === selectedVehicle);
-
-  v.history.push({
-    type: "Report",
-    date: new Date().toISOString().split("T")[0],
-    fileName: fileInput.name,
-    fileURL: fileURL
-  });
-
+  v.history.push(record);
   saveAndRefresh("Maintenance");
 }
 
@@ -948,6 +938,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
