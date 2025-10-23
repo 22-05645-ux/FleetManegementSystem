@@ -647,7 +647,7 @@ function exportCSV(plate, type) {
 
 function generateHeaders(type) {
   switch (type) {
-    case "Maintenance": return "<th>Date</th><th>CV No.</th><th>Reason / Description</th><th>Cost / Amount</th>";
+    case "Maintenance": return "<th>Date</th><th>CV No.</th><th>Reason / Description</th><th>Cost / Amount</th><th>File</th>";
     case "Fuel": return "<th>Date</th><th>Bearer</th><th>PO #</th><th>Fuel Type</th><th>Amount</th><th>Job Order</th>";
     case "Vehicle Request": return "<th>Date</th><th>Project</th><th>Job Order #</th><th>Location</th><th>Driver</th><th>Purpose</th><th>Requested By</th>";
     case "Whereabouts": return "<th>Date</th><th>Place</th>";
@@ -664,7 +664,11 @@ function generateRow(type, r) {
       <td>${r.date}</td>
       <td>${r.cv || "-"}</td>
       <td>${r.reason || "-"}</td>
-      <td>₱${r.cost || "-"}</td>`;
+      <td>₱${r.cost || "-"}</td>
+      <td>${r.date}</td>
+      <td><a href="${r.fileURL}" download="${r.fileName}" target="_blank"
+      style="color:#1a7431; text-decoration:none; font-weight:bold;">
+      ⬇️ ${r.fileName || "Download Report"}</a></td>`;
       break;
     case "Fuel":
       cells = `
@@ -938,6 +942,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
