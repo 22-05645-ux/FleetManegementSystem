@@ -665,7 +665,6 @@ function generateRow(type, r) {
       <td>${r.cv || "-"}</td>
       <td>${r.reason || "-"}</td>
       <td>₱${r.cost || "-"}</td>
-      <td>${r.date}</td>
       <td><a href="${r.fileURL}" download="${r.fileName}" target="_blank"
       style="color:#1a7431; text-decoration:none; font-weight:bold;">
       ⬇️ ${r.fileName || "Download Report"}</a></td>`;
@@ -942,6 +941,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
