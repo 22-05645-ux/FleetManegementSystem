@@ -407,7 +407,7 @@ function renderDetails() {
       <h1>${v.plate}</h1>
       <img src="${imgUrl}" class="details-image" alt="${v.plate}" />
       <div class="tab-buttons">
-        ${["Details","Maintenance","Vehicle Request","Whereabouts","Fuel","Reports","History"]
+        ${["Details","Maintenance","Vehicle Request","Whereabouts","Fuel","History"]
           .map(tab => `<button onclick="setTab('${tab}')" class="${activeTab===tab?'active':''}">${tab}</button>`).join("")}
       </div>
       <div id="tabContent"></div>
@@ -547,9 +547,6 @@ function renderTab(v) {
       `;
       break;
 
-    case "Reports":
-  content.innerHTML = `<p></p>`;
-  break;
 
     case "History":
       content.innerHTML = `
@@ -651,7 +648,6 @@ function generateHeaders(type) {
     case "Fuel": return "<th>Date</th><th>Bearer</th><th>PO #</th><th>Fuel Type</th><th>Amount</th><th>Job Order</th>";
     case "Vehicle Request": return "<th>Date</th><th>Project</th><th>Job Order #</th><th>Location</th><th>Driver</th><th>Purpose</th><th>Requested By</th>";
     case "Whereabouts": return "<th>Date</th><th>Place</th>";
-    case "Report": return "<th>Date</th><th>File</th>";
     default: return "<th>Date</th><th>Details</th>";
   }
 }
@@ -941,6 +937,7 @@ function setTab(tab) { activeTab = tab; renderDetails(); }
 
 if (loggedInUser) renderList();
 else renderLogin();
+
 
 
 
